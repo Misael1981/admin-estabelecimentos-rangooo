@@ -1,20 +1,70 @@
+"use client"
+
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarGroup,
+  SidebarGroupLabel,
   SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import { ClipboardList, LayoutDashboard, Store } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { useParams } from "next/navigation"
+import LogoutButton from "../LogoutButton"
 
 const AppSidebar = () => {
+  const params = useParams()
+  const slug = params.slug as string
+
+  const pages = [
+    {
+      name: "Visão Geral",
+      url: `/${slug}/dashboard`,
+      icon: LayoutDashboard,
+    },
+    {
+      name: "Gerenciar Pedidos",
+      url: `/${slug}/dashboard/pedidos`,
+      icon: ClipboardList,
+    },
+    {
+      name: "Perfil do Estabelecimento",
+      url: `/${slug}/dashboard/perfil`,
+      icon: Store,
+    },
+  ]
+
   return (
     <Sidebar>
-      <SidebarHeader />
+      <SidebarHeader>
+        <div className="bg-blue flex h-40 w-full items-center justify-center rounded-md border-2 border-red-400 bg-amber-50">
+          <Image src="/logo-rangooo.png" alt="Logo" width={160} height={160} />
+        </div>
+      </SidebarHeader>
       <SidebarContent>
-        <SidebarGroup />
-        <SidebarGroup />
+        <SidebarGroup>
+          <SidebarGroupLabel>Aplicações</SidebarGroupLabel>
+          <SidebarMenu>
+            {pages.map((page) => (
+              <SidebarMenuItem key={page.url}>
+                <SidebarMenuButton asChild>
+                  <Link href={page.url}>
+                    <span>{page.name}</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            ))}
+          </SidebarMenu>
+        </SidebarGroup>
       </SidebarContent>
-      <SidebarFooter />
+      <SidebarFooter>
+        <LogoutButton />
+      </SidebarFooter>
     </Sidebar>
   )
 }
