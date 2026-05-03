@@ -15,7 +15,12 @@ import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import LogoutButton from "../LogoutButton"
-import { ClipboardList, LayoutDashboard, Store } from "lucide-react"
+import {
+  ClipboardList,
+  LayoutDashboard,
+  SlidersHorizontal,
+  Store,
+} from "lucide-react"
 
 const AppSidebar = () => {
   const params = useParams()
@@ -36,6 +41,11 @@ const AppSidebar = () => {
       name: "Perfil do Estabelecimento",
       url: `/${slug}/dashboard/perfil`,
       icon: Store,
+    },
+    {
+      name: "Plano e Métodos",
+      url: `/${slug}/dashboard/plano-metodos`,
+      icon: SlidersHorizontal,
     },
   ]
 
