@@ -17,7 +17,9 @@ import { useParams } from "next/navigation"
 import LogoutButton from "../LogoutButton"
 import {
   ClipboardList,
+  Clock3,
   LayoutDashboard,
+  ShoppingBasket,
   SlidersHorizontal,
   Store,
 } from "lucide-react"
@@ -46,6 +48,16 @@ const AppSidebar = () => {
       name: "Plano e Métodos",
       url: `/${slug}/dashboard/plano-metodos`,
       icon: SlidersHorizontal,
+    },
+    {
+      name: "Horários de Funcionamento",
+      url: `/${slug}/dashboard/horarios-funcionamento`,
+      icon: Clock3,
+    },
+    {
+      name: "Gerenciar Cardápio",
+      url: `/${slug}/dashboard/cardapio`,
+      icon: ShoppingBasket,
     },
   ]
 
