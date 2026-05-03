@@ -11,11 +11,11 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { ClipboardList, LayoutDashboard, Store } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { useParams } from "next/navigation"
 import LogoutButton from "../LogoutButton"
+import { ClipboardList, LayoutDashboard, Store } from "lucide-react"
 
 const AppSidebar = () => {
   const params = useParams()
@@ -54,6 +54,7 @@ const AppSidebar = () => {
               <SidebarMenuItem key={page.url}>
                 <SidebarMenuButton asChild>
                   <Link href={page.url}>
+                    <page.icon />
                     <span>{page.name}</span>
                   </Link>
                 </SidebarMenuButton>
