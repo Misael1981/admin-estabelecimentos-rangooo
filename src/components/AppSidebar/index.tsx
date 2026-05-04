@@ -19,9 +19,11 @@ import {
   ClipboardList,
   Clock3,
   LayoutDashboard,
+  Motorbike,
   ShoppingBasket,
   SlidersHorizontal,
   Store,
+  Users,
 } from "lucide-react"
 
 const AppSidebar = () => {
@@ -58,6 +60,16 @@ const AppSidebar = () => {
       name: "Gerenciar Cardápio",
       url: `/${slug}/dashboard/cardapio`,
       icon: ShoppingBasket,
+    },
+    {
+      name: "Gerenciar Usuários",
+      url: `/${slug}/dashboard/usuarios`,
+      icon: Users,
+    },
+    {
+      name: "Entregadores Rangooo Disponíveis",
+      url: `/${slug}/dashboard/entregadores`,
+      icon: Motorbike,
     },
   ]
 
