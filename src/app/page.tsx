@@ -37,7 +37,7 @@ export default async function RootPage() {
             <Link
               key={res.slug}
               href={`/${res.slug}/dashboard`}
-              className="rounded-lg border p-4 transition-colors hover:bg-orange-50"
+              className="rounded-lg border p-4 transition-colors hover:bg-orange-50 hover:text-gray-700"
             >
               <h2 className="font-semibold">{res.name}</h2>
               <p className="text-sm text-gray-500">Acessar painel →</p>
