@@ -1,5 +1,4 @@
 import { getRestaurantMenuBySlug } from "@/data/get-restaurant-menu"
-import { MenuCategoryDTO } from "@/dtos/menu.dto"
 import HeaderCardapio from "./components/HeaderCardapio"
 import ManageMenu from "./components/ManageMenu"
 
@@ -16,7 +15,7 @@ export default async function CardapioPage({ params }: PageProps) {
     return <div>O cardápio ainda está sendo montado ou não existe.</div>
   }
 
-  const menuData: MenuCategoryDTO[] = categories.map((cat) => ({
+  const menuData = categories.map((cat) => ({
     id: cat.id,
     name: cat.name,
     displayOrder: cat.displayOrder,
