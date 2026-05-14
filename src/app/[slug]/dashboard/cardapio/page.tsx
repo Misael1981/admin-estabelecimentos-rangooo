@@ -1,4 +1,7 @@
-import { getRestaurantMenuBySlug } from "@/data/get-restaurant-menu"
+import {
+  getRestaurantMenuBySlug,
+  type RestaurantMenuCategory,
+} from "@/data/get-restaurant-menu"
 import HeaderCardapio from "./components/HeaderCardapio"
 import ManageMenu from "./components/ManageMenu"
 
@@ -9,7 +12,8 @@ interface PageProps {
 export default async function CardapioPage({ params }: PageProps) {
   const { slug } = await params
 
-  const categories = await getRestaurantMenuBySlug(slug)
+  const categories: RestaurantMenuCategory[] =
+    await getRestaurantMenuBySlug(slug)
 
   if (!categories || categories.length === 0) {
     return <div>O cardápio ainda está sendo montado ou não existe.</div>

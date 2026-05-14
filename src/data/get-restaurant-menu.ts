@@ -1,6 +1,6 @@
 import { Prisma, prisma } from "@misael1981/rangooo-database"
 
-type RestaurantMenuCategory = Prisma.MenuCategoryGetPayload<{
+export type RestaurantMenuCategory = Prisma.MenuCategoryGetPayload<{
   include: {
     _count: { select: { products: true } }
     products: {
