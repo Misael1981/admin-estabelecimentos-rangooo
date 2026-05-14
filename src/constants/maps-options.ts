@@ -48,6 +48,12 @@ export const STATUS_CONFIGS: Record<OrderStatus, StatusConfig> = {
     label: "Saiu para a entrega",
     color: "text-yellow-600 bg-yellow-50",
   },
+  READY_FOR_PICKUP: {
+    variant: "default",
+    icon: Package,
+    label: "Pronto para retirada",
+    color: "text-purple-600 bg-purple-50",
+  },
   DELIVERED: {
     variant: "default",
     icon: CheckCircle,

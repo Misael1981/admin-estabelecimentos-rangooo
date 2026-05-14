@@ -48,7 +48,9 @@ export default async function EstablishmentLogin() {
               </span>
               <div className="h-px flex-1 bg-[#1B3D54]/15" />
             </div>
+
             <LoginButton />
+
             <div className="bg-[#1B3D54]/06 mt-8 rounded-lg p-4 text-xs leading-relaxed text-[#6b6259]">
               <strong className="text-[#1B3D54]">Acesso controlado.</strong>{" "}
               Apenas usuários cadastrados previamente pela administração podem

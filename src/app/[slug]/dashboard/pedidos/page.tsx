@@ -37,8 +37,10 @@ export default async function OrdersPage({
   const { restaurant, orders } = data
 
   // FILTRO DE BUSCA
+  let ordersToShow = orders
+
   if (sParams.query) {
-    const ordersFiltered = orders.filter((order) =>
+    ordersToShow = orders.filter((order) =>
       order.orderNumber.toString().includes(sParams.query!),
     )
   }
@@ -54,8 +56,8 @@ export default async function OrdersPage({
       <SearchOrder />
 
       <OrdersListWrapper
-        key={orders.length > 0 ? orders[0].id : "empty"}
-        normalizedOrders={orders}
+        key={`${slug}-${sParams.query}-${sParams.consumptionMethod}`}
+        normalizedOrders={ordersToShow}
         restaurantId={restaurant.id}
         slug={slug}
       />

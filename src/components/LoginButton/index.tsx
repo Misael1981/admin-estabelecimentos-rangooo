@@ -12,7 +12,7 @@ const LoginButton = () => {
   const handleLoginWithGoogleClick = async () => {
     setIsLoading(true)
     try {
-      const slug = window.location.pathname.split("/")[1]
+      const slug = window.location.pathname.split("/login")[1]
       const callbackUrl = `/${slug}/dashboard`
 
       await signIn("google", { callbackUrl })

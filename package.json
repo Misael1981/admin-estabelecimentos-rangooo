@@ -10,9 +10,8 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@misael1981/rangooo-database": "^1.0.3",
+    "@misael1981/rangooo-database": "github:Misael1981/rangooo-database",
     "@prisma/client": "^7.8.0",
-    "rangooo-database": "git+https://github.com/Misael1981/rangooo-database.git",
     "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -23,6 +22,7 @@
     "next-themes": "^0.4.6",
     "pusher-js": "^8.5.0",
     "radix-ui": "^1.4.3",
+    "rangooo-database": "git+https://github.com/Misael1981/rangooo-database.git",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.75.0",
