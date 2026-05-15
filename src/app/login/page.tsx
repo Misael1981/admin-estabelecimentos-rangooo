@@ -1,5 +1,6 @@
 import LoginButton from "@/components/LoginButton"
 import Image from "next/image"
+import { Suspense } from "react"
 
 export default async function EstablishmentLogin() {
   return (
@@ -49,7 +50,9 @@ export default async function EstablishmentLogin() {
               <div className="h-px flex-1 bg-[#1B3D54]/15" />
             </div>
 
-            <LoginButton />
+            <Suspense fallback={<div>Carregando...</div>}>
+              <LoginButton />
+            </Suspense>
 
             <div className="bg-[#1B3D54]/06 mt-8 rounded-lg p-4 text-xs leading-relaxed text-[#6b6259]">
               <strong className="text-[#1B3D54]">Acesso controlado.</strong>{" "}
