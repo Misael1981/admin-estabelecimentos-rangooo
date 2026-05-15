@@ -18,6 +18,18 @@ export type RestaurantMenuCategory = Prisma.MenuCategoryGetPayload<{
   }
 }>
 
+export type RestaurantMenuProduct = Prisma.ProductGetPayload<{
+  select: {
+    id: true
+    name: true
+    price: true
+    imageUrl: true
+    description: true
+    ingredients: true
+    isVisible: true
+  }
+}>
+
 export const getRestaurantMenuBySlug = async (
   slug: string,
 ): Promise<RestaurantMenuCategory[]> => {

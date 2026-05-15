@@ -1,5 +1,6 @@
 import {
   getRestaurantMenuBySlug,
+  RestaurantMenuProduct,
   type RestaurantMenuCategory,
 } from "@/data/get-restaurant-menu"
 import HeaderCardapio from "./components/HeaderCardapio"
@@ -26,7 +27,7 @@ export default async function CardapioPage({ params }: PageProps) {
       name: cat.name,
       displayOrder: cat.displayOrder,
       productsCount: cat._count.products,
-      products: cat.products.map((p) => ({
+      products: cat.products.map((p: RestaurantMenuProduct) => ({
         id: p.id,
         name: p.name,
         description: p.description,
