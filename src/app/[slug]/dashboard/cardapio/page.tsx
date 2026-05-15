@@ -4,6 +4,7 @@ import {
 } from "@/data/get-restaurant-menu"
 import HeaderCardapio from "./components/HeaderCardapio"
 import ManageMenu from "./components/ManageMenu"
+import { MenuCategoryDTO } from "@/dtos/menu.dto"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -19,28 +20,28 @@ export default async function CardapioPage({ params }: PageProps) {
     return <div>O cardápio ainda está sendo montado ou não existe.</div>
   }
 
-  const menuData = categories.map((cat) => ({
-    id: cat.id,
-    name: cat.name,
-    displayOrder: cat.displayOrder,
-    productsCount: cat._count.products,
-
-    products: cat.products.map((p) => ({
-      id: p.id,
-      name: p.name,
-      description: p.description,
-      price: Number(p.price),
-      imageUrl: p.imageUrl,
-      ingredients: p.ingredients,
-      isVisible: p.isVisible,
-    })),
-
-    additionalIngredients: cat.additionalIngredients.map((i) => ({
-      id: i.id,
-      name: i.name,
-      price: Number(i.price),
-    })),
-  }))
+  const menuData: MenuCategoryDTO[] = categories.map(
+    (cat: RestaurantMenuCategory) => ({
+      id: cat.id,
+      name: cat.name,
+      displayOrder: cat.displayOrder,
+      productsCount: cat._count.products,
+      products: cat.products.map((p) => ({
+        id: p.id,
+        name: p.name,
+        description: p.description,
+        price: Number(p.price),
+        imageUrl: p.imageUrl,
+        ingredients: p.ingredients,
+        isVisible: p.isVisible,
+      })),
+      additionalIngredients: cat.additionalIngredients.map((i) => ({
+        id: i.id,
+        name: i.name,
+        price: Number(i.price),
+      })),
+    }),
+  )
 
   return (
     <div className="space-y-8">
