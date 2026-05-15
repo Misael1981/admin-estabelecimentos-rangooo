@@ -1,4 +1,4 @@
-import type { Metadata } from "next"
+import type { Metadata, Viewport } from "next"
 import { Geist, Geist_Mono, Inter } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
@@ -21,7 +21,6 @@ export const metadata: Metadata = {
   title: "Admin Rangooo",
   description:
     "Seu delivery mais rápido, seu negócio mais organizado. O Rangooo cuida de tudo.",
-  themeColor: "#540604",
   icons: {
     icon: [
       { url: "/favicon.ico", type: "image/x-icon" },
@@ -45,7 +44,7 @@ export const metadata: Metadata = {
   manifest: "/site.webmanifest",
 }
 
-export const viewport = {
+export const viewport: Viewport = {
   themeColor: "#540604",
   width: "device-width",
   initialScale: 1,
