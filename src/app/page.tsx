@@ -3,23 +3,12 @@ import { authOptions } from "@/lib/auth" // Onde você definiu as opções
 import { prisma } from "@misael1981/rangooo-database"
 import { redirect } from "next/navigation"
 import Link from "next/link"
-import CardLogo from "@/components/CardLogo"
-import CardForm from "@/components/CardForm"
 
 export default async function RootPage() {
   const session = await getServerSession(authOptions)
 
-  if (!session) {
-    return (
-      <div className="flex min-h-screen flex-col items-center justify-center">
-        <h1>Rangooo Central Admin</h1>
-        <p>Acesso restrito a administradores.</p>
-        <div className="flex flex-col rounded-xl border bg-white p-8 shadow-sm">
-          <CardLogo />
-          <CardForm />
-        </div>
-      </div>
-    )
+  if (!session?.user) {
+    redirect(`/login`)
   }
 
   if (session.user.role === "ADMIN") {
@@ -36,7 +25,7 @@ export default async function RootPage() {
           {restaurants.map((res) => (
             <Link
               key={res.slug}
-              href={`/${res.slug}/dashboard`}
+              href={`/${res.slug}`}
               className="rounded-lg border p-4 transition-colors hover:bg-orange-50 hover:text-gray-700"
             >
               <h2 className="font-semibold">{res.name}</h2>
@@ -49,7 +38,7 @@ export default async function RootPage() {
   }
 
   if (session.user.role === "RESTAURANT_OWNER" && session.user.restaurantSlug) {
-    redirect(`/${session.user.restaurantSlug}/dashboard`)
+    redirect(`/${session.user.restaurantSlug}`)
   }
 
   return <div>Acesso não autorizado.</div>

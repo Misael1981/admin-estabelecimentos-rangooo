@@ -33,42 +33,42 @@ const AppSidebar = () => {
   const pages = [
     {
       name: "Visão Geral",
-      url: `/${slug}/dashboard`,
+      url: `/${slug}`,
       icon: LayoutDashboard,
     },
     {
       name: "Gerenciar Pedidos",
-      url: `/${slug}/dashboard/pedidos`,
+      url: `/${slug}/pedidos`,
       icon: ClipboardList,
     },
     {
       name: "Perfil do Estabelecimento",
-      url: `/${slug}/dashboard/perfil`,
+      url: `/${slug}/perfil`,
       icon: Store,
     },
     {
       name: "Plano e Métodos",
-      url: `/${slug}/dashboard/plano-metodos`,
+      url: `/${slug}/plano-metodos`,
       icon: SlidersHorizontal,
     },
     {
       name: "Horários de Funcionamento",
-      url: `/${slug}/dashboard/horarios-funcionamento`,
+      url: `/${slug}/horarios-funcionamento`,
       icon: Clock3,
     },
     {
       name: "Gerenciar Cardápio",
-      url: `/${slug}/dashboard/cardapio`,
+      url: `/${slug}/cardapio`,
       icon: ShoppingBasket,
     },
     {
       name: "Gerenciar Usuários",
-      url: `/${slug}/dashboard/usuarios`,
+      url: `/${slug}/usuarios`,
       icon: Users,
     },
     {
       name: "Entregadores Rangooo Disponíveis",
-      url: `/${slug}/dashboard/entregadores`,
+      url: `/${slug}/entregadores`,
       icon: Motorbike,
     },
   ]

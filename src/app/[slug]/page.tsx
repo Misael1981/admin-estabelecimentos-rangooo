@@ -16,7 +16,14 @@ export default async function DashboardPage({ params }: DashboardPageProps) {
   const session = await getServerSession(authOptions)
 
   if (!session?.user) {
-    redirect(`/${slug}/login`)
+    redirect(`/login`)
+  }
+
+  if (
+    session.user.role === "RESTAURANT_OWNER" &&
+    session.user.restaurantSlug !== slug
+  ) {
+    redirect("/")
   }
 
   const restaurantData = await getRestaurantDashboardData(slug)
