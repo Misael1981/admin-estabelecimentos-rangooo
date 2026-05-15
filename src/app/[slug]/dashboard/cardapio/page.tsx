@@ -1,5 +1,6 @@
 import {
   getRestaurantMenuBySlug,
+  RestaurantMenuAdditionalIngredient,
   RestaurantMenuProduct,
   type RestaurantMenuCategory,
 } from "@/data/get-restaurant-menu"
@@ -36,11 +37,13 @@ export default async function CardapioPage({ params }: PageProps) {
         ingredients: p.ingredients,
         isVisible: p.isVisible,
       })),
-      additionalIngredients: cat.additionalIngredients.map((i) => ({
-        id: i.id,
-        name: i.name,
-        price: Number(i.price),
-      })),
+      additionalIngredients: cat.additionalIngredients.map(
+        (i: RestaurantMenuAdditionalIngredient) => ({
+          id: i.id,
+          name: i.name,
+          price: Number(i.price),
+        }),
+      ),
     }),
   )
 
