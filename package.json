@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "postinstall": "cd node_modules/@misael1981/rangooo-database && npx prisma generate"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
