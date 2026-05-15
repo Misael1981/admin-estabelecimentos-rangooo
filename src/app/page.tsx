@@ -21,6 +21,7 @@ export default async function RootPage() {
         <h1 className="mb-6 text-2xl font-bold">
           Olá, Misael! Qual loja vamos gerenciar hoje?
         </h1>
+
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
           {restaurants.map((res) => (
             <Link

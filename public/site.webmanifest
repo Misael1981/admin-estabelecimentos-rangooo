@@ -1,24 +1,25 @@
 {
-  "name": "Rangooo",
-  "short_name": "Rangooo",
+  "name": "Administrativo Rangooo",
+  "short_name": "Rangooo Admin",
   "description": "Seu delivery mais rápido, seu negócio mais organizado.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#ffffff",
-  "theme_color": "#16a34a",
+  "theme_color": "#540604",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",
       "sizes": "192x192",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "maskable"
     },
     {
       "src": "/web-app-manifest-512x512.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
   ]
 }
