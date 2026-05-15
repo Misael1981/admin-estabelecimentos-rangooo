@@ -5,20 +5,22 @@ import { Button } from "../ui/button"
 import { signIn } from "next-auth/react"
 import { toast } from "sonner"
 import { FcGoogle } from "react-icons/fc"
+import { useSearchParams } from "next/navigation"
 
 const LoginButton = () => {
   const [isLoading, setIsLoading] = useState(false)
+  const searchParams = useSearchParams()
+  const redirectSlug = searchParams.get("redirect")
 
   const handleLoginWithGoogleClick = async () => {
     setIsLoading(true)
     try {
-      const slug = window.location.pathname.split("/login")[1]
-      const callbackUrl = `/${slug}/dashboard`
+      const callbackUrl = redirectSlug ? `/${redirectSlug}` : "/"
 
       await signIn("google", { callbackUrl })
     } catch (error) {
+      console.error("Erro ao fazer login:", error)
       toast.error("Erro ao fazer login")
-      console.error(error)
       setIsLoading(false)
     }
   }
