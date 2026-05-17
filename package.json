@@ -10,8 +10,9 @@
     "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.2.2",
     "@misael1981/rangooo-database": "github:Misael1981/rangooo-database",
+    "rangooo-database": "git+https://github.com/Misael1981/rangooo-database.git",
+    "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.3",
     "browser-image-compression": "^2.0.2",
     "class-variance-authority": "^0.7.1",
@@ -25,7 +26,6 @@
     "pusher": "^5.3.3",
     "pusher-js": "^8.5.0",
     "radix-ui": "^1.4.3",
-    "rangooo-database": "git+https://github.com/Misael1981/rangooo-database.git",
     "react": "19.2.4",
     "react-dom": "19.2.4",
     "react-hook-form": "^7.75.0",
@@ -52,6 +52,6 @@
     "typescript": "^5"
   },
   "prisma": {
-    "schema": "node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
+    "schema": "./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   }
 }
