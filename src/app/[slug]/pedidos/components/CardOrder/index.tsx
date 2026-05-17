@@ -3,7 +3,11 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { formatCurrency } from "@/helpers/format-currency"
-import { CardOrderProps, METHOD_CONFIGS } from "@/constants/maps-options"
+import {
+  CardOrderProps,
+  METHOD_CONFIGS,
+  paymentMethods,
+} from "@/constants/maps-options"
 import { Button } from "@/components/ui/button"
 import { Printer } from "lucide-react"
 import SelectStatus from "./components/SelectStatus"
@@ -59,13 +63,29 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
               </div>
             ))}
           </div>
-          <div className="flex items-center justify-between pt-1">
-            <span className="text-muted-foreground text-sm font-medium">
-              Total do Pedido
-            </span>
-            <span className="text-lg font-bold text-green-600">
-              {formatCurrency(Number(order.totalAmount))}
-            </span>
+          <div>
+            <div className="flex items-center justify-between pt-1">
+              <span className="text-muted-foreground text-sm font-medium">
+                Total do Pedido
+              </span>
+              <span className="text-lg font-bold text-green-600">
+                {formatCurrency(Number(order.totalAmount))}
+              </span>
+            </div>
+            {order.method === "DELIVERY" && (
+              <div className="flex items-center justify-between pt-1">
+                <span className="text-muted-foreground text-sm font-medium">
+                  Método de pagamento
+                </span>
+                <span className="text-lg font-bold text-green-600">
+                  {
+                    paymentMethods[
+                      order.paymentMethod as keyof typeof paymentMethods
+                    ]
+                  }
+                </span>
+              </div>
+            )}
           </div>
         </CardContent>
         <CardFooter className="gap-0 border-t p-6">

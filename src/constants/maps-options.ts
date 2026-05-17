@@ -127,3 +127,9 @@ export const PLANS_DETAILS: PlanDetail[] = [
     features: ["Tudo do Básico", "Logística Rangooo", "Maior Visibilidade"],
   },
 ]
+
+export const paymentMethods = {
+  pix: "PIX",
+  card: "Cartão",
+  cash: "Dinheiro",
+} as const
