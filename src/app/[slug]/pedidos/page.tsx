@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic"
+
 import { getOrdersData } from "@/data/get-orders-data"
 import { ConsumptionMethod } from "@misael1981/rangooo-database"
 import { notFound } from "next/navigation"

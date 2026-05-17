@@ -3,53 +3,16 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { formatCurrency } from "@/helpers/format-currency"
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
-import { toast } from "sonner"
-import {
-  CardOrderProps,
-  METHOD_CONFIGS,
-  STATUS_CONFIGS,
-} from "@/constants/maps-options"
+import { CardOrderProps, METHOD_CONFIGS } from "@/constants/maps-options"
 import { Button } from "@/components/ui/button"
-import { CheckCircle, Printer } from "lucide-react"
-import type { OrderStatus } from "@misael1981/rangooo-database"
-import { updateOrderStatus } from "@/app/actions/update-order-status"
+import { Printer } from "lucide-react"
+import SelectStatus from "./components/SelectStatus"
 
 const CardOrder = ({ order, slug }: CardOrderProps) => {
   const methodConfig = METHOD_CONFIGS[order.method!]
-  // const MethodIcon = methodConfig.icon;
-  const statusConfig = STATUS_CONFIGS[order.status]
-  const StatusIcon = statusConfig?.icon || CheckCircle
-
-  const handleStatusUpdate = async (newStatus: string) => {
-    try {
-      const result = await updateOrderStatus(
-        order.id,
-        newStatus as OrderStatus,
-        slug!,
-      )
-
-      if (!result.success) {
-        toast.error("Erro ao atualizar status")
-        return
-      }
-
-      toast.success("Status atualizado!")
-    } catch {
-      toast.error("Erro inesperado.")
-    }
-  }
-
-  console.log(order)
 
   return (
-    <>
+    <div className="max-w-120">
       <Card className="hover:border-primary/20 w-full max-w-3xl gap-0 border-2 p-0 transition-all">
         <CardHeader className="gap-0 border-b p-6">
           <div className="flex flex-wrap items-center justify-between gap-4">
@@ -66,36 +29,17 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
                   {/* <MethodIcon className="mr-1 h-4 w-4" /> */}
                   {methodConfig.label}
                 </Badge>
-                <Badge
-                  variant={statusConfig.variant}
-                  className={statusConfig.color}
-                >
-                  <StatusIcon className="mr-1 h-4 w-4" />
-                  {statusConfig.label}
-                </Badge>
               </div>
             </div>
-            <div className="flex w-full justify-center sm:justify-end lg:w-fit">
-              <Select
-                onValueChange={handleStatusUpdate}
-                defaultValue={order.status}
-              >
-                <SelectTrigger className="w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {Object.keys(STATUS_CONFIGS).map((status) => (
-                    <SelectItem key={status} value={status}>
-                      {STATUS_CONFIGS[status as OrderStatus].label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+
+            <SelectStatus
+              status={order.status}
+              slug={slug}
+              orderId={order.id}
+            />
           </div>
         </CardHeader>
         <CardContent className="space-y-4 p-6">
-          {" "}
           <div className="space-y-3">
             {order.items.map((item, index) => (
               <div
@@ -152,7 +96,7 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
           top: 0,
         }}
       ></div>
-    </>
+    </div>
   )
 }
 

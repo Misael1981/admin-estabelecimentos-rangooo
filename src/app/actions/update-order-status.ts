@@ -16,7 +16,7 @@ export async function updateOrderStatus(
       select: { id: true },
     })
 
-    revalidatePath(`/${slug}/dashboard/pedidos`)
+    revalidatePath(`/${slug}/pedidos`)
 
     return { success: true }
   } catch (error) {

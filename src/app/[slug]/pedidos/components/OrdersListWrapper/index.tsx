@@ -4,13 +4,10 @@ import { OrderItemDTO } from "@/dtos/order.dto"
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ChevronDown, ChevronUp } from "lucide-react"
-import dynamic from "next/dynamic"
 import { getPusherClient } from "@/lib/pusher"
 import { useRouter } from "next/navigation"
 import type { AreaType, OrderStatus } from "@misael1981/rangooo-database"
-const CardOrder = dynamic(() => import("../CardOrder"), {
-  ssr: false,
-})
+import CardOrder from "../CardOrder"
 
 type OrderType = {
   id: string
@@ -130,9 +127,11 @@ const OrdersListWrapper = ({
                 <CheckCircle2 className="h-4 w-4" />
                 Histórico de entregas do turno
               </div>
-              {deliveredOrders.map((order) => (
-                <CardOrder key={order.id} order={order} slug={slug} />
-              ))}
+              <div className="flex w-full flex-wrap justify-center gap-4">
+                {deliveredOrders.map((order) => (
+                  <CardOrder key={order.id} order={order} slug={slug} />
+                ))}
+              </div>
             </section>
           )}
         </div>
