@@ -1,6 +1,7 @@
 "use server"
 
 import { db } from "@/lib/prisma"
+import { notifyClientAboutOrderUpdate } from "@/services/notification.service"
 import { OrderStatus } from "@misael1981/rangooo-database"
 import { revalidatePath } from "next/cache"
 
@@ -17,6 +18,8 @@ export async function updateOrderStatus(
     })
 
     revalidatePath(`/${slug}/pedidos`)
+
+    notifyClientAboutOrderUpdate(orderId)
 
     return { success: true }
   } catch (error) {
