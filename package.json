@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev --webpack",
-    "build": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma && next build --webpack",
+    "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "cd node_modules/@misael1981/rangooo-database && npx prisma generate"
+    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
