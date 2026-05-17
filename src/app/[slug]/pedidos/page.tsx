@@ -56,8 +56,8 @@ export default async function OrdersPage({
       <SearchOrder />
 
       <OrdersListWrapper
-        key={`${slug}-${sParams.query}-${sParams.consumptionMethod}`}
         normalizedOrders={ordersToShow}
+        key={ordersToShow.length}
         restaurantId={restaurant.id}
         slug={slug}
       />

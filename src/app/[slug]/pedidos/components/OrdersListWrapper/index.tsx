@@ -55,40 +55,23 @@ const OrdersListWrapper = ({
 
   const deliveredOrders = orders.filter((order) => order.status === "DELIVERED")
 
+  // 1. O SEU USEEFFECT DO PUSHER (Fica magrinho e só avisa o servidor)
   useEffect(() => {
     const pusher = getPusherClient()
     const channel = pusher.subscribe(`restaurant-${restaurantId}`)
 
-    console.log("📡 Conectando ao Pusher, canal:", `restaurant-${restaurantId}`)
-
     const handleOrderCreated = (data: OrderType) => {
-      console.log("🔔 EVENTO order:created RECEBIDO!", data)
-      setOrders((prevOrders) => [data, ...prevOrders])
+      console.log(
+        "🔔 Pedido detectado pelo Pusher, revalidando servidor...",
+        data,
+      )
       router.refresh()
     }
 
-    const handleSubscriptionSucceeded = () => {
-      console.log(
-        "✅ Inscrito no canal com sucesso:",
-        `restaurant-${restaurantId}`,
-      )
-    }
-
-    const handleGlobalEvent = (eventName: string, data: unknown) => {
-      console.log("🌐 Pusher global event:", eventName, data)
-    }
-
     channel.bind("order:created", handleOrderCreated)
-    channel.bind("pusher:subscription_succeeded", handleSubscriptionSucceeded)
-    pusher.bind_global(handleGlobalEvent)
 
     return () => {
       channel.unbind("order:created", handleOrderCreated)
-      channel.unbind(
-        "pusher:subscription_succeeded",
-        handleSubscriptionSucceeded,
-      )
-      pusher.unbind_global(handleGlobalEvent)
       pusher.unsubscribe(`restaurant-${restaurantId}`)
     }
   }, [restaurantId, router])
@@ -108,8 +91,10 @@ const OrdersListWrapper = ({
           </p>
         </div>
       ) : (
-        activeOrders.map((order) => (
-          <CardOrder key={order.id} order={order} slug={slug} />
+        activeOrders.map((order, index) => (
+          <div key={`${order.id || "order"}-${index}`}>
+            <CardOrder order={order} slug={slug} />
+          </div>
         ))
       )}
 

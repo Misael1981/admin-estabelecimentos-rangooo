@@ -17,7 +17,7 @@ import {
   STATUS_CONFIGS,
 } from "@/constants/maps-options"
 import { Button } from "@/components/ui/button"
-import { Printer } from "lucide-react"
+import { CheckCircle, Printer } from "lucide-react"
 import type { OrderStatus } from "@misael1981/rangooo-database"
 import { updateOrderStatus } from "@/app/actions/update-order-status"
 
@@ -25,7 +25,7 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
   const methodConfig = METHOD_CONFIGS[order.method!]
   // const MethodIcon = methodConfig.icon;
   const statusConfig = STATUS_CONFIGS[order.status]
-  const StatusIcon = statusConfig.icon
+  const StatusIcon = statusConfig?.icon || CheckCircle
 
   const handleStatusUpdate = async (newStatus: string) => {
     try {
@@ -45,6 +45,8 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
       toast.error("Erro inesperado.")
     }
   }
+
+  console.log(order)
 
   return (
     <>
