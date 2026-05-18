@@ -62,6 +62,7 @@ export default async function OrdersPage({
         key={ordersToShow.length}
         restaurantId={restaurant.id}
         slug={slug}
+        restaurantName={restaurant.name}
       />
     </div>
   )

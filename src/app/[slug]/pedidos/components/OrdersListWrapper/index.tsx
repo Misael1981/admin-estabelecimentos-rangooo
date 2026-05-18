@@ -37,12 +37,14 @@ type OrdersListWrapperProps = {
   normalizedOrders: OrderType[]
   slug: string
   restaurantId: string
+  restaurantName: string
 }
 
 const OrdersListWrapper = ({
   normalizedOrders,
   slug,
   restaurantId,
+  restaurantName,
 }: OrdersListWrapperProps) => {
   const [showDelivered, setShowDelivered] = useState(false)
   const [orders, setOrders] = useState(normalizedOrders)
@@ -93,7 +95,11 @@ const OrdersListWrapper = ({
             key={`${order.id || "order"}-${index}`}
             className="flex w-full flex-wrap justify-center gap-4"
           >
-            <CardOrder order={order} slug={slug} />
+            <CardOrder
+              order={order}
+              slug={slug}
+              restaurantName={restaurantName}
+            />
           </div>
         ))
       )}
@@ -132,7 +138,12 @@ const OrdersListWrapper = ({
               </div>
               <div className="flex w-full flex-wrap justify-center gap-4">
                 {deliveredOrders.map((order) => (
-                  <CardOrder key={order.id} order={order} slug={slug} />
+                  <CardOrder
+                    key={order.id}
+                    order={order}
+                    slug={slug}
+                    restaurantName={restaurantName}
+                  />
                 ))}
               </div>
             </section>

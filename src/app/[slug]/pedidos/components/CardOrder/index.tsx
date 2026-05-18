@@ -8,12 +8,13 @@ import {
   METHOD_CONFIGS,
   paymentMethods,
 } from "@/constants/maps-options"
-import { Button } from "@/components/ui/button"
-import { Printer } from "lucide-react"
 import SelectStatus from "./components/SelectStatus"
+import PrintOrderButton from "./components/PrintOrderButton"
 
-const CardOrder = ({ order, slug }: CardOrderProps) => {
+const CardOrder = ({ order, slug, restaurantName }: CardOrderProps) => {
   const methodConfig = METHOD_CONFIGS[order.method!]
+
+  console.log(order)
 
   return (
     <div className="max-w-120">
@@ -102,10 +103,7 @@ const CardOrder = ({ order, slug }: CardOrderProps) => {
                 </p>
               )}
             </div>
-            <Button className="w-full sm:w-fit">
-              <Printer className="mr-2 h-4 w-4" />
-              Imprimir Pedido
-            </Button>
+            <PrintOrderButton order={order} restaurantName={restaurantName} />
           </div>
         </CardFooter>
       </Card>
