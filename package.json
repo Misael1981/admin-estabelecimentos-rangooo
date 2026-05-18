@@ -7,11 +7,10 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
+    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma --generator client"
   },
   "dependencies": {
     "@misael1981/rangooo-database": "github:Misael1981/rangooo-database",
-    "rangooo-database": "git+https://github.com/Misael1981/rangooo-database.git",
     "@hookform/resolvers": "^5.2.2",
     "@prisma/client": "^6.19.3",
     "browser-image-compression": "^2.0.2",
