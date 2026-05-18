@@ -56,15 +56,13 @@ const DailySummaryCard = ({ delivery, pickup, dineIn }: DailySummaryProps) => {
                 <div className="rounded-full bg-blue-50 p-2">
                   <Bike className="h-5 w-5 text-blue-600" />
                 </div>
-                <span className="text-sm font-semibold text-slate-700">
-                  Entregas
-                </span>
+                <span className="text-sm font-semibold">Entregas</span>
               </div>
               <div className="text-right">
                 <p className="text-xs text-slate-400">
                   {delivery.count} pedidos
                 </p>
-                <p className="text-lg font-bold text-slate-900">
+                <p className="text-lg font-bold text-green-600">
                   {delivery.value.toLocaleString("pt-BR", {
                     style: "currency",
                     currency: "BRL",
@@ -81,13 +79,11 @@ const DailySummaryCard = ({ delivery, pickup, dineIn }: DailySummaryProps) => {
                 <div className="rounded-full bg-purple-50 p-2">
                   <Store className="h-5 w-5 text-purple-600" />
                 </div>
-                <span className="text-sm font-semibold text-slate-700">
-                  Retiradas
-                </span>
+                <span className="text-sm font-semibold">Retiradas</span>
               </div>
               <div className="text-right">
                 <p className="text-xs text-slate-400">{pickup.count} pedidos</p>
-                <p className="text-lg font-bold text-slate-900">
+                <p className="text-lg font-bold text-green-600">
                   {pickup.value.toLocaleString("pt-BR", {
                     style: "currency",
                     currency: "BRL",
