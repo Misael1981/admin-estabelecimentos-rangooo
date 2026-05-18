@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client/extension"
+import { PrismaClient } from "@misael1981/rangooo-database"
 
 const globalForPrisma = globalThis as unknown as {
   prisma: PrismaClient | undefined

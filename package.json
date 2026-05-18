@@ -7,7 +7,7 @@
     "build": "next build --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma --generator client"
+    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   },
   "dependencies": {
     "@misael1981/rangooo-database": "github:Misael1981/rangooo-database",
@@ -49,5 +49,8 @@
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
     "typescript": "^5"
+  },
+  "prisma": {
+    "schema": "./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   }
 }
