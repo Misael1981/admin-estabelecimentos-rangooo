@@ -127,3 +127,38 @@
     @apply font-sans;
   }
 }
+
+@page {
+  size: 80mm auto;
+  margin: 0;
+}
+
+@media print {
+  body {
+    background: white !important;
+  }
+
+  * {
+    box-shadow: none !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-container {
+    width: 80mm;
+    padding: 8px;
+    margin: 0 auto;
+
+    font-family: monospace;
+    color: black;
+
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .avoid-break {
+    page-break-inside: avoid;
+  }
+}

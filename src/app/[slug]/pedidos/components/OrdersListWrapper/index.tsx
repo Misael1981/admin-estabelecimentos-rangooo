@@ -1,13 +1,15 @@
 "use client"
 
-import { OrderItemDTO } from "@/dtos/order.dto"
-import { useEffect, useState } from "react"
+import { OrderDTO, OrderItemDTO } from "@/dtos/order.dto"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ChevronDown, ChevronUp } from "lucide-react"
 import { getPusherClient } from "@/lib/pusher"
 import { useRouter } from "next/navigation"
 import type { AreaType, OrderStatus } from "@misael1981/rangooo-database"
 import CardOrder from "../CardOrder"
+import OrderPrintTemplate from "../OrderPrintTemplate"
+import { useReactToPrint } from "react-to-print"
 
 type OrderType = {
   id: string
@@ -49,6 +51,12 @@ const OrdersListWrapper = ({
   const [showDelivered, setShowDelivered] = useState(false)
   const [orders, setOrders] = useState(normalizedOrders)
   const router = useRouter()
+  const [selectedOrder, setSelectedOrder] = useState<OrderDTO | null>(null)
+  const printRef = useRef<HTMLDivElement>(null)
+
+  const handlePrint = useReactToPrint({
+    contentRef: printRef,
+  })
 
   const activeOrders = orders.filter((order) => order.status !== "DELIVERED")
 
@@ -75,6 +83,12 @@ const OrdersListWrapper = ({
     }
   }, [restaurantId, router])
 
+  useEffect(() => {
+    if (selectedOrder) {
+      handlePrint()
+    }
+  }, [selectedOrder, handlePrint])
+
   return (
     <section className="flex flex-col items-center justify-center gap-4">
       {orders.length === 0 ? (
@@ -95,11 +109,7 @@ const OrdersListWrapper = ({
             key={`${order.id || "order"}-${index}`}
             className="flex w-full flex-wrap justify-center gap-4"
           >
-            <CardOrder
-              order={order}
-              slug={slug}
-              restaurantName={restaurantName}
-            />
+            <CardOrder order={order} slug={slug} onPrint={setSelectedOrder} />
           </div>
         ))
       )}
@@ -142,7 +152,7 @@ const OrdersListWrapper = ({
                     key={order.id}
                     order={order}
                     slug={slug}
-                    restaurantName={restaurantName}
+                    onPrint={setSelectedOrder}
                   />
                 ))}
               </div>
@@ -150,6 +160,12 @@ const OrdersListWrapper = ({
           )}
         </div>
       )}
+
+      <div className="hidden">
+        <div ref={printRef}>
+          {selectedOrder && <OrderPrintTemplate order={selectedOrder} />}
+        </div>
+      </div>
     </section>
   )
 }

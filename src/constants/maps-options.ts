@@ -72,6 +72,7 @@ export interface CardOrderProps {
   order: OrderDTO
   slug?: string
   restaurantName?: string
+  onPrint: (order: OrderDTO) => void
 }
 
 export const RestaurantCategory = [
