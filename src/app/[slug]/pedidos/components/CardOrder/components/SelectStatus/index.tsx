@@ -39,6 +39,7 @@ const SelectStatus = ({ status, slug, orderId }: SelectStatusProps) => {
       }
 
       setCurrentStatusKey(targetStatus)
+
       toast.success("Status atualizado!")
       router.refresh()
       return true

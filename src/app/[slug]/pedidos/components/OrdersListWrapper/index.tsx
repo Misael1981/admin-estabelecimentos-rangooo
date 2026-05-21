@@ -52,6 +52,7 @@ const OrdersListWrapper = ({
   const [orders, setOrders] = useState(normalizedOrders)
   const router = useRouter()
   const [selectedOrder, setSelectedOrder] = useState<OrderDTO | null>(null)
+  const prevOrdersRef = useRef<string>("")
   const printRef = useRef<HTMLDivElement>(null)
 
   const handlePrint = useReactToPrint({
@@ -83,11 +84,24 @@ const OrdersListWrapper = ({
     }
   }, [restaurantId, router])
 
+  // 2. USEEFFECT DE IMPRESSÃO
   useEffect(() => {
     if (selectedOrder) {
       handlePrint()
     }
   }, [selectedOrder, handlePrint])
+
+  // 3. USEEFFECT DE ESTADO
+  useEffect(() => {
+    const newOrdersJson = JSON.stringify(
+      normalizedOrders.map((o) => o.id + o.status),
+    )
+
+    if (prevOrdersRef.current !== newOrdersJson) {
+      prevOrdersRef.current = newOrdersJson
+      setOrders(normalizedOrders)
+    }
+  }, [normalizedOrders])
 
   return (
     <section className="flex flex-col items-center justify-center gap-4">
@@ -109,7 +123,12 @@ const OrdersListWrapper = ({
             key={`${order.id || "order"}-${index}`}
             className="flex w-full flex-wrap justify-center gap-4"
           >
-            <CardOrder order={order} slug={slug} onPrint={setSelectedOrder} />
+            <CardOrder
+              order={order}
+              slug={slug}
+              onPrint={setSelectedOrder}
+              key={order.id}
+            />
           </div>
         ))
       )}
