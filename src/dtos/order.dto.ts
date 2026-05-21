@@ -56,7 +56,7 @@ export type OrderDTO = {
   totalAmount: number
   status: OrderStatus
   method: "DELIVERY" | "PICKUP" | "DINE_IN"
-  createdAt: Date
+  createdAt: string
   items: OrderItemDTO[]
   address?:
     | {

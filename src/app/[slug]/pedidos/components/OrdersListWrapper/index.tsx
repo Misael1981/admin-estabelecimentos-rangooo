@@ -62,7 +62,7 @@ const OrdersListWrapper = ({
 
   const deliveredOrders = orders.filter((order) => order.status === "DELIVERED")
 
-  // 1. O SEU USEEFFECT DO PUSHER (Fica magrinho e só avisa o servidor)
+  // 1. USEEFFECT DO PUSHER
   useEffect(() => {
     const pusher = getPusherClient()
     const channel = pusher.subscribe(`restaurant-${restaurantId}`)
