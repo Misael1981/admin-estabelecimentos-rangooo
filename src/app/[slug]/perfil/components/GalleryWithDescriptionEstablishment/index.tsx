@@ -1,15 +1,15 @@
 "use client"
 
+import { updateGalleryDescription } from "@/app/actions/update-gallery-description"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Field, FieldLabel } from "@/components/ui/field"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "sonner"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import imageCompression from "browser-image-compression"
-import { updateGalleryDescription } from "@/app/actions/update-gallery-description"
 import ImageUpload from "@/components/ImageUpload"
 
 type GalleryWithDescriptionValue = z.infer<typeof galleryWithDescriptionSchema>

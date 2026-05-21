@@ -163,7 +163,12 @@ const OrdersListWrapper = ({
 
       <div className="hidden">
         <div ref={printRef}>
-          {selectedOrder && <OrderPrintTemplate order={selectedOrder} />}
+          {selectedOrder && (
+            <OrderPrintTemplate
+              order={selectedOrder}
+              restauratName={restaurantName}
+            />
+          )}
         </div>
       </div>
     </section>

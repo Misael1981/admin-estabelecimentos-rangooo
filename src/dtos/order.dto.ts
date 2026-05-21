@@ -22,9 +22,18 @@ export type OrderItemDTO = {
   additionalIngredients?: string[]
 
   isDouble?: boolean
+  flavor1Name?: string
+  flavor1Removed?: string[]
+  flavor1additionalIngredients?: {
+    name: string
+    price: number
+  }[]
   flavor2Name?: string
   flavor2Removed?: string[]
-  flavor2additionalIngredients?: string[]
+  flavor2additionalIngredients?: {
+    name: string
+    price: number
+  }[]
 }
 
 export type OrderItemPrintDTO = {
@@ -47,7 +56,7 @@ export type OrderDTO = {
   totalAmount: number
   status: OrderStatus
   method: "DELIVERY" | "PICKUP" | "DINE_IN"
-  createdAt: string
+  createdAt: Date
   items: OrderItemDTO[]
   address?:
     | {
