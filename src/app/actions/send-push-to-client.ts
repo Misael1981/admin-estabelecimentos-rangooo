@@ -1,5 +1,6 @@
 "use server"
 
+import { STATUS_CONFIGS } from "@/constants/maps-options"
 import { db } from "@/lib/prisma"
 import webpush from "web-push"
 
@@ -26,6 +27,8 @@ export async function sendPushToClient({
 
   if (!subscriptions.length) return
 
+  const currentStatus = STATUS_CONFIGS[status as keyof typeof STATUS_CONFIGS]
+
   const notifications = subscriptions.map(
     (sub: { id: string; endpoint: string; auth: string; p256dh: string }) =>
       webpush
@@ -36,7 +39,7 @@ export async function sendPushToClient({
           },
           JSON.stringify({
             title: `Pedido #${orderNumber} atualizado!`,
-            body: `Seu pedido está: ${status}. Toque para acompanhar.`,
+            body: `Seu pedido está: ${currentStatus.label}. Toque para acompanhar.`,
             url: `https://rangooo.vercel.app/meus-pedidos`,
           }),
         )
