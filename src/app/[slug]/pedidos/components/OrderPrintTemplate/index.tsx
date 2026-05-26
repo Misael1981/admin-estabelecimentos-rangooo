@@ -1,7 +1,7 @@
 import { OrderDTO } from "@/dtos/order.dto"
 import OrderItems from "./components/OrderItems"
 import { METHOD_CONFIGS, paymentMethods } from "@/constants/maps-options"
-import { formatDate } from "@/helpers/format-data"
+import { formatDateWithDate } from "@/helpers/format-date-with-date"
 
 type OrderPrintTemplateProps = {
   order: OrderDTO
@@ -24,7 +24,7 @@ const OrderPrintTemplate = ({
 
       <p>Cliente: {order.customerName}</p>
       <p>Contato: {order.customerPhone}</p>
-      <p>Hora: {formatDate(order.createdAt)}</p>
+      <p>Hora: {formatDateWithDate(order.createdAt)}</p>
 
       <hr className="my-2" />
 
