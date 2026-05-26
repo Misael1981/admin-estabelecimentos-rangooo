@@ -20,7 +20,7 @@ type OrderType = {
   totalAmount: number
   status: OrderStatus
   method: "DELIVERY" | "PICKUP" | "DINE_IN"
-  createdAt: string
+  createdAt: Date
   items: OrderItemDTO[]
   address?:
     | {

@@ -58,7 +58,7 @@ export async function getOrdersData(slug: string, method?: ConsumptionMethod) {
     status: order.status,
     method: order.consumptionMethod,
     paymentMethod: order.paymentMethod,
-    createdAt: order.createdAt.toISOString(),
+    createdAt: order.createdAt,
     address: parseAddress(order.deliveryAddress),
     items: order.items.map((i) => ({
       id: i.id,

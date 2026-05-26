@@ -16,7 +16,7 @@ const OrderItems = ({ order }: OrderPrintTemplateProps) => {
           <div className="">
             <div className="flex flex-col gap-4">
               <div>
-                <span className="text-muted-foreground text-[10px] font-semibold tracking-wider uppercase">
+                <span className="mb-3 font-semibold tracking-wider uppercase">
                   {item.category || "Geral"}
                 </span>
                 {item.isDouble ? (
@@ -99,10 +99,12 @@ const OrderItems = ({ order }: OrderPrintTemplateProps) => {
               </div>
             </div>
             <div>
-              <span>Preço total: </span>
-              <span className="text-xl text-green-600">
-                {formatCurrency(item.price)}
-              </span>
+              <div>
+                <span>Preço item: </span>
+                <span className="text-xl font-semibold">
+                  {formatCurrency(order.totalAmount)}
+                </span>
+              </div>
             </div>
           </div>
         </div>

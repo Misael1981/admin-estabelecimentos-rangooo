@@ -30,7 +30,6 @@ const CardOrder = ({ order, slug, onPrint }: CardOrderProps) => {
                   variant="outline"
                   className={`${methodConfig.color} border-current`}
                 >
-                  {/* <MethodIcon className="mr-1 h-4 w-4" /> */}
                   {methodConfig.label}
                 </Badge>
               </div>
