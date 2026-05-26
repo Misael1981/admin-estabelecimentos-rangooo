@@ -1,6 +1,7 @@
 // ajuste o caminho para onde sua DTO está
 
 import { OrderDTO, OrderItemDTO } from "@/dtos/order.dto"
+import { formatDateWithDate } from "@/helpers/format-date-with-date"
 
 // Configurações da loja
 export interface StoreConfig {
@@ -22,16 +23,6 @@ interface ExtraItem {
 
 function formatCurrency(value: number): string {
   return value.toLocaleString("pt-BR", { style: "currency", currency: "BRL" })
-}
-
-function formatDate(isoString: string): string {
-  return new Date(isoString).toLocaleString("pt-BR", {
-    day: "2-digit",
-    month: "2-digit",
-    year: "2-digit",
-    hour: "2-digit",
-    minute: "2-digit",
-  })
 }
 
 function getMethodLabel(method: OrderDTO["method"]): string {
@@ -198,7 +189,7 @@ export function generateThermalReceiptHtml(
       <!-- Meta -->
       <div class="order-meta">
         <div class="meta-row">
-          <span>${formatDate(order.createdAt)}</span>
+          <span>${formatDateWithDate(order.createdAt)}</span>
           <span><b>${getMethodLabel(order.method)}</b></span>
         </div>
         <div class="meta-row">
