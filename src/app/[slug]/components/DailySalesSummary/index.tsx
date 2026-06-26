@@ -9,13 +9,12 @@ import {
   UtensilsCrossed,
 } from "lucide-react"
 import { formatCurrency } from "@/helpers/format-currency"
-import { Decimal } from "@misael1981/rangooo-database/generated-client/runtime/library"
 import DailySummaryCard from "../DailySummaryCard"
 
 interface Order {
   id: string
   status: string
-  totalAmount: Decimal
+  totalAmount: number
   consumptionMethod: "DELIVERY" | "PICKUP" | "DINE_IN" | string
   createdAt: Date
 }

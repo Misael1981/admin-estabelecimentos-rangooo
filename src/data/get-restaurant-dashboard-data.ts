@@ -66,5 +66,13 @@ export async function getRestaurantDashboardData(slug: string) {
     },
   })
 
-  return restaurant
+  if (!restaurant) return null
+
+  return {
+    ...restaurant,
+    orders: restaurant.orders.map((order) => ({
+      ...order,
+      totalAmount: Number(order.totalAmount),
+    })),
+  }
 }
