@@ -55,8 +55,6 @@ const ProductsListSession = ({
     return null
   }
 
-  console.log("Produtos selecionados: ", selectedProductsCategory.products)
-
   const filteredProducts = selectedProductsCategory.products.filter((p) =>
     p.name.toLowerCase().includes(search.toLowerCase()),
   )
