@@ -3,9 +3,17 @@ import { Clock } from "lucide-react"
 import OpeningHours, { TimeSlotDTO } from "./components/OpeningHours"
 import { notFound } from "next/navigation"
 import { getOpeningHoursBySlug } from "@/data/get-opening-hours-by-slug"
+import { JsonValue } from "@misael1981/rangooo-database/generated-client/runtime/library"
 
 interface PageProps {
   params: Promise<{ slug: string }>
+}
+
+type HoursDTO = {
+  id: string
+  dayOfWeek: number
+  timeSlots: JsonValue
+  isClosed: boolean
 }
 
 export default async function HorariosFuncionamentoPage({ params }: PageProps) {
@@ -19,7 +27,7 @@ export default async function HorariosFuncionamentoPage({ params }: PageProps) {
 
   const { businessHours, id } = establishment
 
-  const formattedHours = businessHours.map((hour) => ({
+  const formattedHours = businessHours.map((hour: HoursDTO) => ({
     ...hour,
     timeSlots: hour.timeSlots as unknown as TimeSlotDTO[],
   }))
