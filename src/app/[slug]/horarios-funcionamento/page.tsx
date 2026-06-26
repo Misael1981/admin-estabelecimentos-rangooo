@@ -3,7 +3,6 @@ import { Clock } from "lucide-react"
 import OpeningHours, { TimeSlotDTO } from "./components/OpeningHours"
 import { notFound } from "next/navigation"
 import { getOpeningHoursBySlug } from "@/data/get-opening-hours-by-slug"
-import { JsonValue } from "@misael1981/rangooo-database/generated-client/runtime/library"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -12,7 +11,7 @@ interface PageProps {
 type HoursDTO = {
   id: string
   dayOfWeek: number
-  timeSlots: JsonValue
+  timeSlots: unknown
   isClosed: boolean
 }
 
