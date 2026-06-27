@@ -6,8 +6,9 @@
     "dev": "next dev --webpack",
     "start": "next start",
     "lint": "eslint",
-    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
-    "build": "next build --webpack"
+    "prebuild": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
+    "build": "next build --webpack",
+    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

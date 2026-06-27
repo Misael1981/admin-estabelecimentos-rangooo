@@ -2,7 +2,7 @@
 
 import { Checkbox } from "@/components/ui/checkbox"
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field"
-import { OrderStatus } from "@misael1981/rangooo-database"
+import { OrderStatusDTO } from "@/dtos/enums.dto"
 import {
   CheckCircle,
   ChefHat,
@@ -14,7 +14,7 @@ import {
 } from "lucide-react"
 
 type CheckboxStatusProps = {
-  status: OrderStatus
+  status: OrderStatusDTO
 }
 
 interface StatusConfig {
@@ -24,7 +24,7 @@ interface StatusConfig {
   color: string
 }
 
-export const STATUS_CONFIGS: Record<OrderStatus, StatusConfig> = {
+export const STATUS_CONFIGS: Record<OrderStatusDTO, StatusConfig> = {
   PENDING: {
     variant: "secondary",
     icon: Clock,

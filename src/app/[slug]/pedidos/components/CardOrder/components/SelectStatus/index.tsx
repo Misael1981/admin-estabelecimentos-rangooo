@@ -13,31 +13,24 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import DialogCancelOrder from "../DialogCancelOrder"
-
-type OrderStatus =
-  | "PENDING"
-  | "CONFIRMED"
-  | "PREPARING"
-  | "OUT_FOR_DELIVERY"
-  | "READY_FOR_PICKUP"
-  | "DELIVERED"
-  | "CANCELED"
+import { OrderStatusDTO } from "@/dtos/enums.dto"
 
 type SelectStatusProps = {
-  status: OrderStatus
+  status: OrderStatusDTO
   slug: string | undefined
   orderId: string
 }
 
 const SelectStatus = ({ status, slug, orderId }: SelectStatusProps) => {
   const router = useRouter()
-  const [currentStatusKey, setCurrentStatusKey] = useState<OrderStatus>(status)
+  const [currentStatusKey, setCurrentStatusKey] =
+    useState<OrderStatusDTO>(status)
   const [isCancelDialogOpen, setIsCancelDialogOpen] = useState(false)
 
   const currentStatus = STATUS_CONFIGS[currentStatusKey]
   const CurrentIcon = currentStatus.icon
 
-  const executeStatusUpdate = async (targetStatus: OrderStatus) => {
+  const executeStatusUpdate = async (targetStatus: OrderStatusDTO) => {
     try {
       const result = await updateOrderStatus(orderId, targetStatus, slug!)
 
@@ -58,7 +51,7 @@ const SelectStatus = ({ status, slug, orderId }: SelectStatusProps) => {
   }
 
   const handleStatusChangeAttempt = async (newStatus: string) => {
-    const target = newStatus as OrderStatus
+    const target = newStatus as OrderStatusDTO
 
     if (target === "CANCELED") {
       setIsCancelDialogOpen(true)
