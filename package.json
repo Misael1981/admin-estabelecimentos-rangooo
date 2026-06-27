@@ -7,7 +7,7 @@
     "start": "next start",
     "lint": "eslint",
     "prebuild": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
-    "build": "next build --webpack",
+    "build": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma && next build --webpack",
     "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
   },
   "dependencies": {
