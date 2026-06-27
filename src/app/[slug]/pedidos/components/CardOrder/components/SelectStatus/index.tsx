@@ -9,11 +9,19 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { STATUS_CONFIGS } from "@/constants/maps-options"
-import { OrderStatus } from "@misael1981/rangooo-database"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { toast } from "sonner"
 import DialogCancelOrder from "../DialogCancelOrder"
+
+type OrderStatus =
+  | "PENDING"
+  | "CONFIRMED"
+  | "PREPARING"
+  | "OUT_FOR_DELIVERY"
+  | "READY_FOR_PICKUP"
+  | "DELIVERED"
+  | "CANCELED"
 
 type SelectStatusProps = {
   status: OrderStatus
