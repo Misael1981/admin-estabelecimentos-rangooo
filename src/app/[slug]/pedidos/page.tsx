@@ -7,8 +7,6 @@ import HeaderOrdersPage from "./components/HeaderOrdersPage"
 import FilterConsumptionMethods from "./components/FilterConsumptionMethods"
 import SearchOrder from "./components/SearchOrder"
 import OrdersListWrapper from "./components/OrdersListWrapper"
-import DeliveryEstimateSettings from "@/components/DeliveryEstimateSettings"
-import { getDeliveryEstimateSettings } from "@/data/get-delivery-estimate-settings"
 
 interface OrdersPageProps {
   params: Promise<{
@@ -49,17 +47,9 @@ export default async function OrdersPage({
     )
   }
 
-  const deliveryEstimate = await getDeliveryEstimateSettings(restaurant.id)
-
   return (
     <div className="space-y-8">
       <HeaderOrdersPage totalOrders={orders.length} />
-
-      <DeliveryEstimateSettings
-        deliveryEstimate={deliveryEstimate}
-        restaurantId={restaurant.id}
-        slug={slug}
-      />
 
       <FilterConsumptionMethods
         consumptionMethods={restaurant.consumptionMethods}

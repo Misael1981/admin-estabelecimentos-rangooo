@@ -20,8 +20,8 @@ import {
   Clock3,
   LayoutDashboard,
   Motorbike,
+  Settings,
   ShoppingBasket,
-  SlidersHorizontal,
   Store,
   Users,
 } from "lucide-react"
@@ -47,11 +47,6 @@ const AppSidebar = () => {
       icon: Store,
     },
     {
-      name: "Plano e Métodos",
-      url: `/${slug}/plano-metodos`,
-      icon: SlidersHorizontal,
-    },
-    {
       name: "Horários de Funcionamento",
       url: `/${slug}/horarios-funcionamento`,
       icon: Clock3,
@@ -70,6 +65,11 @@ const AppSidebar = () => {
       name: "Entregadores Rangooo Disponíveis",
       url: `/${slug}/entregadores`,
       icon: Motorbike,
+    },
+    {
+      name: "Configurações",
+      url: `/${slug}/configuracoes`,
+      icon: Settings,
     },
   ]
 

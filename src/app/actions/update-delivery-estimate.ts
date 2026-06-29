@@ -55,7 +55,7 @@ export async function updateDeliveryEstimate(params: {
     console.error("Erro ao recalcular tempo estimado após update:", error)
   }
 
-  revalidatePath(`/${slug}/dashboard/pedidos`)
+  revalidatePath(`/${slug}/configuracoes`)
 
   return {
     success: true,
