@@ -10,7 +10,8 @@
     "build": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma && next build --webpack",
     "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
     "db:migrate-retroactive": "tsx scripts/migrate-retroactive-clients.ts",
-    "db:clean-orders": "tsx scripts/complete-old-orders.ts"
+    "db:clean-orders": "tsx scripts/complete-old-orders.ts",
+    "db:clean-tests": "tsx scripts/delete-test-orders.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
