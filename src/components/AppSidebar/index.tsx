@@ -24,6 +24,7 @@ import {
   ShoppingBasket,
   Store,
   Users,
+  UserStar,
 } from "lucide-react"
 
 const AppSidebar = () => {
@@ -60,6 +61,11 @@ const AppSidebar = () => {
       name: "Gerenciar Usuários",
       url: `/${slug}/usuarios`,
       icon: Users,
+    },
+    {
+      name: "Gerenciar Clientes",
+      url: `/${slug}/clientes`,
+      icon: UserStar,
     },
     {
       name: "Entregadores Rangooo Disponíveis",

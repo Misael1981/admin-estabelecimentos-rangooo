@@ -1,5 +1,5 @@
 import DeliveryEstimateSettings from "@/components/DeliveryEstimateSettings"
-import GenericHeader from "@/components/GenericHeader/header"
+import GenericHeader from "@/components/GenericHeader"
 import HeaderEstablishmentsPage from "@/components/HeaderEstablishmentsPage"
 import { getDeliveryEstimateSettings } from "@/data/get-delivery-estimate-settings"
 import { getEstablishmentForPlansAndMethodsBySlug } from "@/data/get-establishment-for-plans-and-methods-by-slug"

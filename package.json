@@ -8,7 +8,9 @@
     "lint": "eslint",
     "prebuild": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
     "build": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma && next build --webpack",
-    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma"
+    "postinstall": "prisma generate --schema=./node_modules/@misael1981/rangooo-database/prisma/schema.prisma",
+    "db:migrate-retroactive": "tsx scripts/migrate-retroactive-clients.ts",
+    "db:clean-orders": "tsx scripts/complete-old-orders.ts"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -50,6 +52,7 @@
     "prettier-plugin-tailwindcss": "^0.7.3",
     "prisma": "^6.19.3",
     "tailwindcss": "^4",
+    "tsx": "^4.22.4",
     "typescript": "^5"
   },
   "prisma": {

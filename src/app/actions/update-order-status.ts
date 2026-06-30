@@ -7,6 +7,7 @@ import {
 } from "@/services/notification.service"
 import { OrderStatus } from "@misael1981/rangooo-database"
 import { revalidatePath } from "next/cache"
+import { updateRestaurantClientCRM } from "./update-restaurant-client"
 
 export async function updateOrderStatus(
   orderId: string,
@@ -24,6 +25,10 @@ export async function updateOrderStatus(
 
     notifyClientAboutOrderUpdate(orderId)
     notifyNewOrder(orderId, slug)
+
+    if (status === OrderStatus.DELIVERED) {
+      await updateRestaurantClientCRM(orderId)
+    }
 
     return { success: true }
   } catch (error) {
