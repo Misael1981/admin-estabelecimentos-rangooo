@@ -25,7 +25,7 @@ type CustomerCardProps = {
 const CustomerCard = ({ client, slug }: CustomerCardProps) => {
   return (
     <div>
-      <Link href={`/${slug}/clientes/${client.id}`}>
+      <Link href={`/${slug}/clientes/${client.userId}`}>
         <div className="hover:bg-muted/50 space-y-4 rounded-lg border p-3 transition-all">
           <div className="flex items-center justify-between gap-4">
             <div>
