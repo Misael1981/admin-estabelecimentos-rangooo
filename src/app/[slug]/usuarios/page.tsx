@@ -1,3 +1,5 @@
+import GenericHeader from "@/components/GenericHeader"
+import { TrafficCone } from "lucide-react"
 import Image from "next/image"
 
 interface PageProps {
@@ -8,10 +10,9 @@ export default async function UsuariosPage({ params }: PageProps) {
   const { slug } = await params
 
   return (
-    <div>
-      <h1 className="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
-        Gerenciar Usuários - {slug}
-      </h1>
+    <div className="space-y-6">
+      <GenericHeader title="Página em Construção" icon={TrafficCone} />
+
       <div className="flex justify-center">
         <Image
           src="/page-under-construction.png"
