@@ -110,7 +110,8 @@ export type PlanDetail = {
   id: PlanType
   title: string
   description: string
-  features: string[] // Dica: adicionei isso pra você listar os benefícios!
+  features: string[]
+  price: number
 }
 
 export const PLANS_DETAILS: PlanDetail[] = [
@@ -120,6 +121,7 @@ export const PLANS_DETAILS: PlanDetail[] = [
     description:
       "Ideal para estabelecimentos que estão começando e desejam uma presença online simples. Inclui recursos essenciais para gerenciar seu cardápio, pedidos e clientes.",
     features: ["Cardápio Digital", "Gestão de Pedidos", "Entrega Própria"],
+    price: 98,
   },
   {
     id: "PRO",
@@ -127,6 +129,7 @@ export const PLANS_DETAILS: PlanDetail[] = [
     description:
       "Nesse plano o estabelecimento tem acesso às entregas do Rangooo Entregas. O pedido chega direto para nossos entregadores parceiros, que cuidam de tudo para você.",
     features: ["Tudo do Básico", "Logística Rangooo", "Maior Visibilidade"],
+    price: 156,
   },
 ]
 

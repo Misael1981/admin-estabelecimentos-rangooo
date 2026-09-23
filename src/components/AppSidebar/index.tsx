@@ -73,7 +73,7 @@ const AppSidebar = () => {
       icon: Motorbike,
     },
     {
-      name: "Configurações",
+      name: "Configurações  do Sistema",
       url: `/${slug}/configuracoes`,
       icon: Settings,
     },
