@@ -3,10 +3,11 @@ import GenericHeader from "@/components/GenericHeader"
 import HeaderEstablishmentsPage from "@/components/HeaderEstablishmentsPage"
 import { getDeliveryEstimateSettings } from "@/data/get-delivery-estimate-settings"
 import { getEstablishmentForPlansAndMethodsBySlug } from "@/data/get-establishment-for-plans-and-methods-by-slug"
-import { Settings, SlidersHorizontal } from "lucide-react"
+import { FileText, Settings, SlidersHorizontal } from "lucide-react"
 import { notFound } from "next/navigation"
 import PlansSection from "./components/PlansSection"
 import ConsumptionAndPaymentMethodsForm from "./components/ConsumptionAndPaymentMethodsForm"
+import LinkButtonDefault from "@/components/LinkButtonDefault"
 
 interface SettingsPageProps {
   params: Promise<{
@@ -41,6 +42,14 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
         description="Gerencie as configurações gerais do sistema"
         icon={Settings}
       />
+
+      <div className="flex justify-end">
+        <LinkButtonDefault
+          url={`/${slug}/configuracoes/contrato`}
+          label="Ver Contrato Vigente"
+          icon={<FileText />}
+        />
+      </div>
 
       <DeliveryEstimateSettings
         deliveryEstimate={deliveryEstimate}

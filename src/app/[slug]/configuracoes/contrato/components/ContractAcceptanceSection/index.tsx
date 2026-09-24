@@ -6,6 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { CheckCircle2, ShieldCheck } from "lucide-react"
 import { acceptContractAction } from "@/app/actions/accept-contract"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 type ContractAcceptanceSectionProps = {
   restaurantId: string
@@ -24,6 +25,7 @@ const ContractAcceptanceSection = ({
 }: ContractAcceptanceSectionProps) => {
   const [accepted, setAccepted] = useState(false)
   const [isPending, startTransition] = useTransition()
+  const router = useRouter()
 
   // Se o contrato dessa versão já foi assinado/aceito pelo estabelecimento
   if (isAlreadyAccepted) {
@@ -59,6 +61,7 @@ const ContractAcceptanceSection = ({
 
       if (!response.success) {
         toast.error(response.message)
+        router.push(`/${slug}`)
       }
 
       toast.success(response.message)
