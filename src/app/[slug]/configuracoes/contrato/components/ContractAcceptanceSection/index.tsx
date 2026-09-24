@@ -12,6 +12,7 @@ type ContractAcceptanceSectionProps = {
   contractVersion: string
   isAlreadyAccepted: boolean
   acceptedAt?: Date | null
+  slug: string
 }
 
 const ContractAcceptanceSection = ({
@@ -19,6 +20,7 @@ const ContractAcceptanceSection = ({
   contractVersion,
   isAlreadyAccepted,
   acceptedAt,
+  slug,
 }: ContractAcceptanceSectionProps) => {
   const [accepted, setAccepted] = useState(false)
   const [isPending, startTransition] = useTransition()
@@ -52,10 +54,11 @@ const ContractAcceptanceSection = ({
       const response = await acceptContractAction({
         restaurantId,
         contractVersion,
+        slug,
       })
 
       if (!response.success) {
-        toast.error(response.message) // Substitua pelo seu Toast de preferência
+        toast.error(response.message)
       }
 
       toast.success(response.message)

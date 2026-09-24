@@ -7,11 +7,13 @@ import { revalidatePath } from "next/cache"
 type AcceptContractInput = {
   restaurantId: string
   contractVersion: string
+  slug: string
 }
 
 export async function acceptContractAction({
   restaurantId,
   contractVersion,
+  slug,
 }: AcceptContractInput) {
   try {
     const headersList = await headers()
@@ -59,7 +61,7 @@ export async function acceptContractAction({
       },
     })
 
-    revalidatePath("/[slug]/configuracoes/contrato") // Ajuste a rota se necessário
+    revalidatePath(`/${slug}/configuracoes/contrato`)
 
     return {
       success: true,

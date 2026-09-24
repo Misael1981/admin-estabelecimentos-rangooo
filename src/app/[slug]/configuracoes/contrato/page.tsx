@@ -41,6 +41,7 @@ export default async function ContractPage({ params }: PageProps) {
         restaurantId={data.establishment?.id}
         contractVersion={data.activeContract?.version}
         isAlreadyAccepted={isAlreadyAccepted}
+        slug={slug}
       />
     </div>
   )
