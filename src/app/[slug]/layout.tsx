@@ -2,6 +2,7 @@ import AppSidebar from "@/components/AppSidebar"
 import BreadcrumbDashboarding from "@/components/BreadcrumbDashboarding"
 import ContractWarningBanner from "@/components/ContractWarningBanner"
 import ModeToggle from "@/components/ModeToggle"
+import { DashboardNotifications } from "@/components/DashboardNotifications"
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 import { db } from "@/lib/prisma"
 
@@ -28,6 +29,11 @@ export default async function DashboardLayout({
     },
   })
 
+  if (!restaurant) {
+    // trate 404 aqui conforme seu padrão
+    return null
+  }
+
   const CURRENT_CONTRACT_VERSION = "v1.0"
 
   const isContractPending =
@@ -46,6 +52,7 @@ export default async function DashboardLayout({
         </header>
         <main className="p-4 lg:p-8">{children}</main>
       </div>
+      <DashboardNotifications restaurantId={restaurant.id} />
     </SidebarProvider>
   )
 }

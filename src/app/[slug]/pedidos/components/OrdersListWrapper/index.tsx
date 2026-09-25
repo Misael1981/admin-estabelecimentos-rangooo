@@ -4,12 +4,12 @@ import { OrderDTO, OrderItemDTO } from "@/dtos/order.dto"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ChevronDown, ChevronUp } from "lucide-react"
-import { getPusherClient } from "@/lib/pusher"
 import { useRouter } from "next/navigation"
 import type { AreaType, OrderStatus } from "@misael1981/rangooo-database"
 import CardOrder from "../CardOrder"
 import OrderPrintTemplate from "../OrderPrintTemplate"
 import { useReactToPrint } from "react-to-print"
+import { usePusherChannel } from "@/hooks/usePusherChannel"
 
 type OrderType = {
   id: string
@@ -63,26 +63,14 @@ const OrdersListWrapper = ({
 
   const deliveredOrders = orders.filter((order) => order.status === "DELIVERED")
 
-  // 1. USEEFFECT DO PUSHER
-  useEffect(() => {
-    const pusher = getPusherClient()
-    const channel = pusher.subscribe(`restaurant-${restaurantId}`)
-
-    const handleOrderCreated = (data: OrderType) => {
-      console.log(
-        "🔔 Pedido detectado pelo Pusher, revalidando servidor...",
-        data,
-      )
-      router.refresh()
-    }
-
-    channel.bind("order:created", handleOrderCreated)
-
-    return () => {
-      channel.unbind("order:created", handleOrderCreated)
-      pusher.unsubscribe(`restaurant-${restaurantId}`)
-    }
-  }, [restaurantId, router])
+  // dentro do OrdersListWrapper, substitui o "1. USEEFFECT DO PUSHER" inteiro por:
+  usePusherChannel(`restaurant-${restaurantId}`, "order:created", (data) => {
+    console.log(
+      "🔔 Pedido detectado pelo Pusher, revalidando servidor...",
+      data,
+    )
+    router.refresh()
+  })
 
   // 2. USEEFFECT DE IMPRESSÃO
   useEffect(() => {

@@ -3,6 +3,8 @@ import Pusher from "pusher-js"
 let client: Pusher | null = null
 
 export const getPusherClient = () => {
+  if (typeof window === "undefined") return null
+
   if (!client) {
     if (process.env.NODE_ENV === "development") {
       Pusher.logToConsole = true

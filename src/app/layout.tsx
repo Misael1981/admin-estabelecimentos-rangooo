@@ -4,6 +4,7 @@ import "./globals.css"
 import { cn } from "@/lib/utils"
 import { ThemeProvider } from "@/components/ThemeProvider"
 import { Toaster } from "@/components/ui/sonner"
+import { SessionProvider } from "@/components/Providers/SessionProvider"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 
@@ -77,7 +78,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
           <Toaster />
         </ThemeProvider>
       </body>
