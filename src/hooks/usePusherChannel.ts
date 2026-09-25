@@ -1,11 +1,8 @@
-// hooks/usePusherChannel.ts
 "use client"
 
 import { useEffect } from "react"
 import { getPusherClient } from "@/lib/pusher"
-import type Pusher from "pusher-js"
 
-// Contador de "quem está usando" cada canal, compartilhado entre todos os hooks
 const refCounts = new Map<string, number>()
 
 export function usePusherChannel(
@@ -28,7 +25,6 @@ export function usePusherChannel(
       const current = (refCounts.get(channelName) ?? 1) - 1
       refCounts.set(channelName, current)
 
-      // Só desinscreve de verdade quando NINGUÉM mais estiver usando o canal
       if (current <= 0) {
         refCounts.delete(channelName)
         pusher.unsubscribe(channelName)
