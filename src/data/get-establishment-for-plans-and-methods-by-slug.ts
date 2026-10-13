@@ -2,14 +2,17 @@ import {
   AreaType,
   ConsumptionMethod,
   PaymentMethod,
+  PaymentReceiptStatus,
   PlanType,
   prisma,
+  SubscriptionStatus,
 } from "@misael1981/rangooo-database"
 
 export type EstablishmentPlansMethods = {
   id: string
   name: string
   slug: string
+  createdAt: Date
   plan: PlanType
   useRangoooDelivery: boolean
   deliveryAreas: {
@@ -27,6 +30,21 @@ export type EstablishmentPlansMethods = {
   paymentMethods: {
     method: PaymentMethod
   }[]
+  subscription: {
+    id: string
+    plan: {
+      name: string
+      price: number
+    }
+    status: SubscriptionStatus
+    currentPeriodEnd: Date
+    contractAcceptedAt: Date | null
+    contractVersion: string | null
+    receipts: {
+      status: PaymentReceiptStatus
+      dueDate: Date
+    }[]
+  } | null
 }
 
 export async function getEstablishmentForPlansAndMethodsBySlug(
@@ -41,6 +59,7 @@ export async function getEstablishmentForPlansAndMethodsBySlug(
         slug: true,
         plan: true,
         useRangoooDelivery: true,
+        createdAt: true,
         deliveryAreas: {
           select: {
             areaType: true,
@@ -55,6 +74,27 @@ export async function getEstablishmentForPlansAndMethodsBySlug(
         paymentMethods: {
           select: {
             method: true,
+          },
+        },
+        subscription: {
+          select: {
+            id: true,
+            status: true,
+            contractAcceptedAt: true,
+            contractVersion: true,
+            currentPeriodEnd: true,
+            plan: {
+              select: {
+                name: true,
+                price: true,
+              },
+            },
+            receipts: {
+              select: {
+                dueDate: true,
+                status: true,
+              },
+            },
           },
         },
       },
@@ -73,6 +113,15 @@ export async function getEstablishmentForPlansAndMethodsBySlug(
             URBAN: settings.urbanDeliveryFee,
             RURAL: settings.ruralDeliveryFee,
             DISTRICT: settings.districtDeliveryFee,
+          }
+        : null,
+      subscription: establishment.subscription
+        ? {
+            ...establishment.subscription,
+            plan: {
+              ...establishment.subscription.plan,
+              price: establishment.subscription.plan.price.toNumber(), // 👈 Converte o Decimal do Prisma para number
+            },
           }
         : null,
     }

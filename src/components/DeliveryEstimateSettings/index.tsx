@@ -14,6 +14,7 @@ import { Button } from "../ui/button"
 import { DeliveryEstimateDTO } from "@/dtos/delivery-estimate.dto"
 import { updateDeliveryEstimate } from "@/app/actions/update-delivery-estimate"
 import { toast } from "sonner"
+import { Card } from "../ui/card"
 
 type DeliveryEstimateSettingsProps = {
   deliveryEstimate: DeliveryEstimateDTO | null
@@ -60,7 +61,7 @@ const DeliveryEstimateSettings = ({
 
   return (
     <FormProvider {...form}>
-      <section className="w-full space-y-6">
+      <Card className="w-full space-y-6 p-4 md:p-6">
         <div className="space-y-2">
           <h3 className="text-xl font-semibold">
             Configuração da Estimativa de Entrega
@@ -84,7 +85,7 @@ const DeliveryEstimateSettings = ({
             </Button>
           </div>
         </form>
-      </section>
+      </Card>
     </FormProvider>
   )
 }

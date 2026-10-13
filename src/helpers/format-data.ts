@@ -7,3 +7,22 @@ export function formatDate(date: Date): string {
     minute: "2-digit",
   })
 }
+
+export function formatDateDayMonthYear(date: Date | null | string | undefined) {
+  if (!date) return "—"
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    month: "short",
+    year: "numeric",
+    timeZone: "UTC",
+  }).format(new Date(date))
+}
+
+export function formatDateDay(date: Date | null | string | undefined) {
+  if (!date) return "—"
+
+  return new Intl.DateTimeFormat("pt-BR", {
+    day: "2-digit",
+    timeZone: "UTC",
+  }).format(new Date(date))
+}

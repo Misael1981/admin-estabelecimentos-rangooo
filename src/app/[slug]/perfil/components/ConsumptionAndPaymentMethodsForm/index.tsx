@@ -22,6 +22,7 @@ import {
   PaymentMethodValue,
 } from "@/constants/database-enums"
 import { updateRestaurantMethods } from "@/app/actions/update-restaurant-methods"
+import { Card } from "@/components/ui/card"
 
 const methodsSchema = z.object({
   consumptionMethods: z.array(
@@ -81,7 +82,7 @@ const ConsumptionAndPaymentMethodsForm = ({
 
   return (
     <section className="w-full">
-      <div className="mx-auto max-w-2xl rounded-lg border border-gray-300 p-6 shadow-lg">
+      <Card className="mx-auto w-full max-w-3xl p-6 shadow-lg">
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FieldGroup className="flex flex-col justify-center gap-8 md:flex-row">
             {/* SEÇÃO: MÉTODOS DE CONSUMO */}
@@ -183,7 +184,7 @@ const ConsumptionAndPaymentMethodsForm = ({
             </Button>
           </div>
         </form>
-      </div>
+      </Card>
     </section>
   )
 }

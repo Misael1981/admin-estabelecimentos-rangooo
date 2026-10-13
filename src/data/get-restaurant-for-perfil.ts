@@ -31,6 +31,16 @@ export async function getRestaurantForPerfil(slug: string) {
         select: { id: true, name: true },
         orderBy: { name: "asc" },
       },
+      consumptionMethods: {
+        select: {
+          method: true,
+        },
+      },
+      paymentMethods: {
+        select: {
+          method: true,
+        },
+      },
     },
   })
 

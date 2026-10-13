@@ -3,13 +3,12 @@ import GenericHeader from "@/components/GenericHeader"
 import HeaderEstablishmentsPage from "@/components/HeaderEstablishmentsPage"
 import { getDeliveryEstimateSettings } from "@/data/get-delivery-estimate-settings"
 import { getEstablishmentForPlansAndMethodsBySlug } from "@/data/get-establishment-for-plans-and-methods-by-slug"
-import { FileText, Settings, SlidersHorizontal } from "lucide-react"
+import { Settings, SlidersHorizontal } from "lucide-react"
 import { notFound } from "next/navigation"
 import PlansSection from "./components/PlansSection"
-import ConsumptionAndPaymentMethodsForm from "./components/ConsumptionAndPaymentMethodsForm"
-import LinkButtonDefault from "@/components/LinkButtonDefault"
 import { getSystemReleases } from "@/data/impression/get-systemRelease.queries"
 import AgentVersionGrid from "./components/AgentVersionGrid"
+import SubscriptionPaymentsSection from "./components/SubscriptionPaymentsSection"
 
 interface SettingsPageProps {
   params: Promise<{
@@ -36,8 +35,7 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
     useRangoooDelivery,
     deliveryAreas,
     systemSettings,
-    consumptionMethods,
-    paymentMethods,
+    subscription,
   } = establishment
 
   return (
@@ -48,23 +46,15 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
         icon={Settings}
       />
 
-      <div className="flex justify-end">
-        <LinkButtonDefault
-          url={`/${slug}/configuracoes/contrato`}
-          label="Ver Contrato Vigente"
-          icon={<FileText />}
-        />
-      </div>
-
-      <DeliveryEstimateSettings
-        deliveryEstimate={deliveryEstimate}
-        restaurantId={establishment.id}
+      <SubscriptionPaymentsSection
         slug={slug}
+        subscription={subscription}
+        createdAt={establishment.createdAt}
       />
 
       <div className="space-y-8">
         <HeaderEstablishmentsPage
-          title="Plano e Metodos"
+          title="Configure o Plano e Tempo de Entrega"
           icon={<SlidersHorizontal />}
           description="Gerencie o plano de assinatura e métodos de pagamento e consumo
             disponíveis para seus clientes . Mantenha suas opções atualizadas
@@ -83,14 +73,13 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
             restaurantId={establishment.id}
             slug={slug}
           />
-
-          <ConsumptionAndPaymentMethodsForm
-            initialConsumptionMethods={consumptionMethods.map((m) => m.method)}
-            initialPaymentMethods={paymentMethods.map((m) => m.method)}
-            restaurantId={establishment.id}
-            slug={slug}
-          />
         </div>
+
+        <DeliveryEstimateSettings
+          deliveryEstimate={deliveryEstimate}
+          restaurantId={establishment.id}
+          slug={slug}
+        />
       </div>
 
       <AgentVersionGrid releases={releases} />

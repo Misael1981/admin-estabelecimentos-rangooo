@@ -6,6 +6,7 @@ import EstablishmentContacts from "./components/EstablishmentContacts"
 import SocialMediaEstablishment from "./components/SocialMediaEstablishment"
 import EstablishmentAddress from "./components/EstablishmentAddress"
 import GalleryWithDescriptionEstablishment from "./components/GalleryWithDescriptionEstablishment"
+import ConsumptionAndPaymentMethodsForm from "./components/ConsumptionAndPaymentMethodsForm"
 
 interface PageProps {
   params: Promise<{ slug: string }>
@@ -20,7 +21,7 @@ export default async function PerfilPage({ params }: PageProps) {
     return notFound()
   }
 
-  const category = restaurant.category
+  const { consumptionMethods, paymentMethods, category } = restaurant
 
   return (
     <div className="space-y-8">
@@ -63,6 +64,13 @@ export default async function PerfilPage({ params }: PageProps) {
         description={restaurant.description || ""}
         avatarImageUrl={restaurant.avatarImageUrl || ""}
         coverImageUrl={restaurant.coverImageUrl || ""}
+        restaurantId={restaurant.id}
+        slug={slug}
+      />
+
+      <ConsumptionAndPaymentMethodsForm
+        initialConsumptionMethods={consumptionMethods.map((m) => m.method)}
+        initialPaymentMethods={paymentMethods.map((m) => m.method)}
         restaurantId={restaurant.id}
         slug={slug}
       />
