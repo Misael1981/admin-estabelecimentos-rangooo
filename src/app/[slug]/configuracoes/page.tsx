@@ -8,6 +8,8 @@ import { notFound } from "next/navigation"
 import PlansSection from "./components/PlansSection"
 import ConsumptionAndPaymentMethodsForm from "./components/ConsumptionAndPaymentMethodsForm"
 import LinkButtonDefault from "@/components/LinkButtonDefault"
+import { getSystemReleases } from "@/data/impression/get-systemRelease.queries"
+import AgentVersionGrid from "./components/AgentVersionGrid"
 
 interface SettingsPageProps {
   params: Promise<{
@@ -18,11 +20,16 @@ interface SettingsPageProps {
 export default async function SettingsPage({ params }: SettingsPageProps) {
   const { slug } = await params
 
-  const establishment = await getEstablishmentForPlansAndMethodsBySlug(slug)
+  const [establishment, releases] = await Promise.all([
+    getEstablishmentForPlansAndMethodsBySlug(slug),
+    getSystemReleases(),
+  ])
 
   if (!establishment) {
     return notFound()
   }
+
+  const deliveryEstimate = await getDeliveryEstimateSettings(establishment.id)
 
   const {
     plan,
@@ -32,8 +39,6 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
     consumptionMethods,
     paymentMethods,
   } = establishment
-
-  const deliveryEstimate = await getDeliveryEstimateSettings(establishment.id)
 
   return (
     <div className="space-y-8">
@@ -87,6 +92,8 @@ export default async function SettingsPage({ params }: SettingsPageProps) {
           />
         </div>
       </div>
+
+      <AgentVersionGrid releases={releases} />
     </div>
   )
 }

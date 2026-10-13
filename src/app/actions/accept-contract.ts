@@ -24,7 +24,6 @@ export async function acceptContractAction({
       ? forwardedFor.split(",")[0].trim()
       : realIp || "127.0.0.1"
 
-    // Busca o ID do plano padrão (ex: BÁSICO) caso precise criar a Subscription
     const defaultPlan = await db.subscriptionPlan.findFirst({
       where: { isActive: true },
     })
