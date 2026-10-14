@@ -1,4 +1,6 @@
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import PixQRCode from "@/components/PixQRCode"
+import { Card } from "@/components/ui/card"
+import { getSubscriptionBySlug } from "@/data/payments/get-subscription-by-slug.queries"
 
 interface PaymentsPageProps {
   params: Promise<{
@@ -9,11 +11,15 @@ interface PaymentsPageProps {
 export default async function PaymentsPage({ params }: PaymentsPageProps) {
   const { slug } = await params
 
+  const establishment = await getSubscriptionBySlug(slug)
+
+  if (!establishment) {
+    return null
+  }
+
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>{slug}</CardTitle>
-      </CardHeader>
+      <PixQRCode plan={establishment?.subscription?.plan} />
     </Card>
   )
 }
