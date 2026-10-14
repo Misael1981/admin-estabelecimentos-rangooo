@@ -44,6 +44,10 @@ export function generatePixPayload({
   amount,
   txid = "***",
 }: PixPayloadParams): string {
+  if (!key.trim()) {
+    throw new Error("Chave Pix não configurada (NEXT_PUBLIC_PIX_KEY)")
+  }
+
   const merchantAccountInfo = formatField(
     "26",
     formatField("00", "br.gov.bcb.pix") +

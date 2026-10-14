@@ -25,6 +25,9 @@ export async function getSubscriptionBySlug(slug: string) {
               select: {
                 dueDate: true,
                 status: true,
+                amount: true,
+                paymentMethod: true,
+                notes: true,
               },
             },
           },
@@ -43,6 +46,10 @@ export async function getSubscriptionBySlug(slug: string) {
               ...establishment.subscription.plan,
               price: establishment.subscription.plan.price.toNumber(),
             },
+            receipts: establishment.subscription.receipts.map((receipt) => ({
+              ...receipt,
+              amount: receipt.amount.toNumber(),
+            })),
           }
         : null,
     }
