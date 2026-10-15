@@ -23,11 +23,14 @@ export async function getSubscriptionBySlug(slug: string) {
             },
             receipts: {
               select: {
+                id: true,
                 dueDate: true,
+                paidAt: true,
                 status: true,
                 amount: true,
                 paymentMethod: true,
                 notes: true,
+                receiptNumber: true,
               },
             },
           },
