@@ -97,7 +97,7 @@ A plataforma atende principalmente pequenos e médios estabelecimentos, oferecen
 
 ## 📋 Roadmap por Etapas (Fases de Execução)
 
-- [ ] **Fase 1:** Gestão de contratos e assinaturas dos estabelecimentos
+- [x] **Fase 1:** Gestão de contratos e assinaturas dos estabelecimentos
   - Contrato online
   - Gerenciamento do plano contratado
   - Controle de vencimento
@@ -114,5 +114,5 @@ A plataforma atende principalmente pequenos e médios estabelecimentos, oferecen
 
 ## 📝 Registro do Último Ponto de Parada (Handover)
 
-- **O que foi feito no último chat:** Criação do CONTEXT.md
-- **Próximo passo imediato:** Atualizar o schema.prisma
+- **Fase 1 Concluída:** já está em produção
+- **Próximo passo imediato:** Fase 2: Registro de pedidos realizados por telefone

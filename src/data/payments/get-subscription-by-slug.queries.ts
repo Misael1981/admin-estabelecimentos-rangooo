@@ -22,6 +22,10 @@ export async function getSubscriptionBySlug(slug: string) {
               },
             },
             receipts: {
+              orderBy: {
+                dueDate: "desc",
+              },
+              take: 6,
               select: {
                 id: true,
                 dueDate: true,
