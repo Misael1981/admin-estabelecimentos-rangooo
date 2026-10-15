@@ -8,19 +8,12 @@ import {
 } from "@/components/ui/card"
 import { PaymentReceiptStatus } from "@/constants/enums"
 import { formatDateDayMonthYear } from "@/helpers/format-data"
-import { CreditCard, FileText, Receipt } from "lucide-react"
+import { CreditCard, FileText, Printer, Receipt } from "lucide-react"
+import { ReceiptDTO } from "../ListReceipts"
 
 type ReceiptCardProps = {
-  receipt: {
-    amount: number
-    id: string
-    status: PaymentReceiptStatus
-    paymentMethod: string | null
-    receiptNumber: number
-    dueDate: Date
-    paidAt: Date | null
-    notes: string | null
-  }
+  receipt: ReceiptDTO
+  onPrint: (receipt: ReceiptDTO) => void
 }
 
 const STATUS_CONFIG: Record<
@@ -58,7 +51,7 @@ const currencyFormatter = new Intl.NumberFormat("pt-BR", {
   currency: "BRL",
 })
 
-const ReceiptCard = ({ receipt }: ReceiptCardProps) => {
+const ReceiptCard = ({ receipt, onPrint }: ReceiptCardProps) => {
   const status = STATUS_CONFIG[receipt.status]
 
   return (
@@ -120,7 +113,12 @@ const ReceiptCard = ({ receipt }: ReceiptCardProps) => {
       </CardContent>
 
       <CardFooter className="border-t pt-4">
-        <Button className="w-full" variant="outline">
+        <Button
+          className="w-full"
+          variant="outline"
+          onClick={() => onPrint(receipt)}
+        >
+          <Printer className="mr-2 h-4 w-4" />
           Imprimir Recibo
         </Button>
       </CardFooter>

@@ -4,7 +4,7 @@ import { notFound } from "next/navigation"
 import HeaderEstablishmentsPage from "@/components/HeaderEstablishmentsPage"
 import { TicketCheck } from "lucide-react"
 import PaymentDescription from "./components/PaymentDescription"
-import ReceiptCard from "./components/ReceiptCard"
+import ListReceipts from "./components/ListReceipts"
 
 interface PaymentsPageProps {
   params: Promise<{
@@ -37,11 +37,10 @@ export default async function PaymentsPage({ params }: PaymentsPageProps) {
         icon={<TicketCheck />}
       />
 
-      <section className="flex flex-wrap justify-center gap-4">
-        {establishment.subscription.receipts.map((r) => (
-          <ReceiptCard receipt={r} key={r.id} />
-        ))}
-      </section>
+      <ListReceipts
+        receipts={establishment.subscription.receipts}
+        establishmentName={establishment.name}
+      />
     </div>
   )
 }
