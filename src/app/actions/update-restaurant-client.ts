@@ -18,6 +18,13 @@ export async function updateRestaurantClientCRM(orderId: string) {
       return { success: false }
     }
 
+    if (!order.userId) {
+      return {
+        success: false,
+        message: "Pedido sem usuário de aplicativo vinculado.",
+      }
+    }
+
     await db.restaurantClient.upsert({
       where: {
         restaurantId_userId: {

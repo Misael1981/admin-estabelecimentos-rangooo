@@ -12,6 +12,13 @@ export async function notifyClientAboutOrderUpdate(orderId: string) {
 
   if (!order) return
 
+  if (!order.userId) {
+    return {
+      success: false,
+      message: "Pedido sem usuário de aplicativo vinculado.",
+    }
+  }
+
   await Promise.all([
     pusherServer
       .trigger(`client-${order.userId}`, "order-updated", {

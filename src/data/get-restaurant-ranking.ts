@@ -47,7 +47,14 @@ export async function getRestaurantRanking({
 
     if (ordersGrouped.length === 0) return []
 
-    const userIds = ordersGrouped.map((item) => item.userId)
+    const userIds = ordersGrouped
+      .map((item) => item.userId)
+      .filter((id): id is string => id !== null)
+
+    if (userIds.length === 0) {
+      return []
+    }
+
     const users = await prisma.user.findMany({
       where: {
         id: { in: userIds },
