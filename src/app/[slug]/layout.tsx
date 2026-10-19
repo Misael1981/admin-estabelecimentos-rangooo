@@ -54,7 +54,7 @@ export default async function DashboardLayout({
   return (
     <SidebarProvider>
       <AppSidebar />
-      <div className="w-full">
+      <div className="min-w-0 flex-1">
         {isPaymentOverdue && (
           <WarningBanner
             label="Prezado cliente, identificamos que ainda não consta em nosso sistema a confirmação do pagamento da assinatura. Pedimos, por gentileza, que regularize o pagamento o quanto antes para evitar possíveis restrições no acesso à plataforma Rangooo. Caso o pagamento já tenha sido realizado, desconsidere este aviso."

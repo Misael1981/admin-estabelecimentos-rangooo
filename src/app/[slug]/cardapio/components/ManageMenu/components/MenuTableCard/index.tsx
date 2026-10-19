@@ -15,6 +15,7 @@ import AlertDialogDelete from "../AlertDialogDelete"
 type CategorySummary = {
   id: string
   name: string
+  isDouble: boolean
   productsCount: number
 }
 
@@ -23,6 +24,7 @@ type Props = {
   onSelect: (id: string) => void
   onDelete: (id: string) => void
   selectedCategoryId: string
+  onEdit: (table: CategorySummary) => void
 }
 
 const MenuTableCard = ({
@@ -30,6 +32,7 @@ const MenuTableCard = ({
   onSelect,
   onDelete,
   selectedCategoryId,
+  onEdit,
 }: Props) => {
   const [openDeleteDialog, setOpenDeleteDialog] = useState(false)
 
@@ -54,6 +57,7 @@ const MenuTableCard = ({
         <p className="text-xs text-gray-500">
           {table.productsCount} produto(s)
         </p>
+        {table.isDouble && <p className="text-xs text-amber-400">2 Sabores</p>}
       </div>
       <div className="flex items-center gap-2 transition-opacity group-hover:opacity-100 md:opacity-0">
         <ChevronRight
@@ -67,9 +71,9 @@ const MenuTableCard = ({
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => onEdit(table)}>
               <Edit className="mr-2 h-4 w-4" />
-              Renomear
+              Editar
             </DropdownMenuItem>
             <DropdownMenuSeparator />
             <DropdownMenuItem

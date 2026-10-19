@@ -1,4 +1,10 @@
-import { PaymentReceiptStatus, PlanType, SubscriptionStatus } from "./enums"
+import {
+  AreaType,
+  ConsumptionMethod,
+  PaymentReceiptStatus,
+  PlanType,
+  SubscriptionStatus,
+} from "./enums"
 
 export const PLAN_TYPE_LABELS: Record<PlanType, string> = {
   BASICO: "Básico",
@@ -18,4 +24,16 @@ export const PAYMENT_RECEIPT_LABELS: Record<PaymentReceiptStatus, string> = {
   PENDING: "Pendente",
   OVERDUE: "Vencido",
   CANCELED: "Cancelado",
+}
+
+export const CONSUMPTION_METHOD_LABEL: Record<ConsumptionMethod, string> = {
+  DELIVERY: "Entrega",
+  PICKUP: "Retirada",
+  DINE_IN: "Consumo no Local",
+}
+
+export const AREA_TYPE_LABEL: Record<AreaType, string> = {
+  URBAN: "Perímetro Urbano",
+  RURAL: "Zona Rural",
+  DISTRICT: "Distrito",
 }

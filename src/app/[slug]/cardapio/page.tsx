@@ -27,6 +27,7 @@ export default async function CardapioPage({ params }: PageProps) {
       id: cat.id,
       name: cat.name,
       displayOrder: cat.displayOrder,
+      isDouble: cat.isDouble,
       productsCount: cat._count.products,
       products: cat.products.map((p: RestaurantMenuProduct) => ({
         id: p.id,

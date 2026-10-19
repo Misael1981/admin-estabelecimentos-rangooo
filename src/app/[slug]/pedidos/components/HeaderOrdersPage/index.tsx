@@ -2,12 +2,14 @@ import { Badge } from "@/components/ui/badge"
 import { ClipboardList, Calendar } from "lucide-react"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
+import MenuPages from "./components/MenuPages"
 
 interface HeaderOrdersPageProps {
-  totalOrders: number
+  totalOrders?: number
+  slug: string
 }
 
-const HeaderOrdersPage = ({ totalOrders }: HeaderOrdersPageProps) => {
+const HeaderOrdersPage = ({ totalOrders, slug }: HeaderOrdersPageProps) => {
   const today = format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR })
 
   return (
@@ -28,7 +30,7 @@ const HeaderOrdersPage = ({ totalOrders }: HeaderOrdersPageProps) => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        {totalOrders !== undefined && totalOrders !== null && (
           <div className="flex flex-col items-end">
             <span className="text-xs font-medium tracking-wider text-slate-400 uppercase">
               Fluxo do Turno
@@ -45,8 +47,10 @@ const HeaderOrdersPage = ({ totalOrders }: HeaderOrdersPageProps) => {
               </Badge>
             </div>
           </div>
-        </div>
+        )}
       </div>
+
+      <MenuPages slug={slug} />
 
       <hr className="border-slate-100" />
     </header>

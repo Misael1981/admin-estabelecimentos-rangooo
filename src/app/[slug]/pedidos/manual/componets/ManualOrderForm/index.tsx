@@ -1,0 +1,187 @@
+"use client"
+
+import { Button } from "@/components/ui/button"
+import { AreaType, ConsumptionMethod } from "@/constants/enums"
+import {
+  ManualOrderFormInput,
+  ManualOrderFormValue,
+  manualOrderSchema,
+} from "@/schemas/manual-order.schemas"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useTransition } from "react"
+import { FormProvider, useForm } from "react-hook-form"
+import { toast } from "sonner"
+import ConsumptionMethodFields from "./components/ConsumptionMethodFields"
+import PickupFields from "./components/PickupFields"
+import DeliveryFields from "./components/DeliveryFields"
+import { AnimatePresence, motion } from "framer-motion"
+import DineInFields from "./components/DineInFields"
+import MenuCategorySelector from "./components/MenuCategorySelector"
+
+type ManualOrderFormProps = {
+  establishment: {
+    menuCategories: {
+      products: {
+        price: number
+        name: string
+        id: string
+        description: string | null
+        imageUrl: string | null
+        ingredients: string[]
+        orderItems: {
+          id: string
+          isDouble: boolean
+        }[]
+      }[]
+      name: string
+      id: string
+      displayOrder: number
+      isDouble: boolean
+    }[]
+    name: string
+    id: string
+    slug: string
+    consumptionMethods: {
+      id: string
+      method: ConsumptionMethod
+      isActive: boolean
+    }[]
+  }
+}
+
+const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
+  const router = useRouter()
+  const [isPending, startTransition] = useTransition()
+
+  const searchParams = useSearchParams()
+  const requestedMethod = searchParams.get("consumptionMethod")
+
+  const activeMethods = establishment.consumptionMethods.filter(
+    (method) => method.isActive,
+  )
+
+  const defaultConsumptionMethod = (activeMethods[0]?.method ??
+    "DELIVERY") as ManualOrderFormValue["consumptionMethod"]
+
+  const methods = useForm<ManualOrderFormInput, unknown, ManualOrderFormValue>({
+    resolver: zodResolver(manualOrderSchema),
+    defaultValues: {
+      consumptionMethod: defaultConsumptionMethod,
+      customerName: "",
+      customerPhone: "",
+      customerCode: undefined,
+      pickupTime: undefined,
+
+      areaType: AreaType.URBAN,
+      address: {
+        street: "",
+        number: "",
+        complement: "",
+        neighborhood: "",
+        city: "",
+        state: "",
+        reference: "",
+      },
+    },
+  })
+
+  const { handleSubmit, setValue, watch } = methods
+
+  const selectedMethod: ManualOrderFormValue["consumptionMethod"] =
+    activeMethods.some((method) => method.method === requestedMethod)
+      ? (requestedMethod as ManualOrderFormValue["consumptionMethod"])
+      : defaultConsumptionMethod
+
+  useEffect(() => {
+    setValue("consumptionMethod", selectedMethod, {
+      shouldValidate: true,
+    })
+  }, [selectedMethod, setValue])
+
+  const consumptionMethod = watch("consumptionMethod")
+
+  const onSubmit = async (data: ManualOrderFormInput) => {
+    startTransition(async () => {
+      try {
+        toast.success("Pedido efetuado com sucesso!")
+        console.log("Pedido efetuado: ", data)
+        router.push(`/${establishment.slug}/pedidos`)
+      } catch (error) {
+        console.error("Erro ao registrar pedido:", error)
+        toast.error("Ocorreu um erro ao registrar pedido.")
+      }
+    })
+  }
+
+  const onError = (errors: unknown) => {
+    console.log("❌ O ZOD BLOQUEOU O ENVIO NESSES CAMPOS:", errors)
+  }
+
+  return (
+    <FormProvider {...methods}>
+      <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-6">
+        <ConsumptionMethodFields
+          consumptionMethods={establishment.consumptionMethods}
+          slug={establishment.slug}
+        />
+
+        <AnimatePresence mode="wait">
+          {consumptionMethod === ConsumptionMethod.DINE_IN && (
+            <motion.div
+              key="dine-in"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <DineInFields />
+            </motion.div>
+          )}
+
+          {consumptionMethod === ConsumptionMethod.DELIVERY && (
+            <motion.div
+              key="delivery"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <DeliveryFields />
+            </motion.div>
+          )}
+
+          {consumptionMethod === ConsumptionMethod.PICKUP && (
+            <motion.div
+              key="pickup"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.2 }}
+              className="overflow-hidden"
+            >
+              <PickupFields />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <MenuCategorySelector menuCategories={establishment.menuCategories} />
+
+        <div className="flex w-full justify-center">
+          <Button
+            className="w-full max-w-xl"
+            type="submit"
+            size="lg"
+            disabled={isPending}
+          >
+            {isPending ? "Salvando..." : "Criar Pedido"}
+          </Button>
+        </div>
+      </form>
+    </FormProvider>
+  )
+}
+
+export default ManualOrderForm

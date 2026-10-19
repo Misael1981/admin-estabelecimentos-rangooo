@@ -35,6 +35,7 @@ const ManageMenu = ({
   const categoriesSummary = menuData.map((cat) => ({
     id: cat.id,
     name: cat.name,
+    isDouble: cat.isDouble,
     productsCount: cat.products?.length ?? 0,
   }))
 

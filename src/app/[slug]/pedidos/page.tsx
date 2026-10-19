@@ -49,7 +49,7 @@ export default async function OrdersPage({
 
   return (
     <div className="space-y-8">
-      <HeaderOrdersPage totalOrders={orders.length} />
+      <HeaderOrdersPage totalOrders={orders.length} slug={slug} />
 
       <FilterConsumptionMethods
         consumptionMethods={restaurant.consumptionMethods}

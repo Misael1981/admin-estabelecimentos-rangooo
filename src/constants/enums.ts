@@ -25,3 +25,20 @@ export const PaymentReceiptStatus = {
 
 export type PaymentReceiptStatus =
   (typeof PaymentReceiptStatus)[keyof typeof PaymentReceiptStatus]
+
+export const ConsumptionMethod = {
+  DELIVERY: "DELIVERY",
+  PICKUP: "PICKUP",
+  DINE_IN: "DINE_IN",
+}
+
+export type ConsumptionMethod =
+  (typeof ConsumptionMethod)[keyof typeof ConsumptionMethod]
+
+export const AreaType = {
+  URBAN: "URBAN",
+  RURAL: "RURAL",
+  DISTRICT: "DISTRICT",
+}
+
+export type AreaType = (typeof AreaType)[keyof typeof AreaType]

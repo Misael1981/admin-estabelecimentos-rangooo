@@ -2,6 +2,7 @@ export interface MenuCategoryDTO {
   id: string
   name: string
   displayOrder: number
+  isDouble: boolean
   productsCount: number
   products: MenuProductDTO[]
   additionalIngredients: AdditionalIngredientDTO[]
