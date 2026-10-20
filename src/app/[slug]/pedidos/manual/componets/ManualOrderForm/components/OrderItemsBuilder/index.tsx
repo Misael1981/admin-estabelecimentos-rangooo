@@ -1,9 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area"
-import { Separator } from "@/components/ui/separator"
 import {
   ManageableIngredientDTO,
   MenuCategoryDTO,
@@ -12,10 +8,12 @@ import { ManualOrderFormInput } from "@/schemas/manual-order.schemas"
 import { useState } from "react"
 import { useFieldArray, useFormContext } from "react-hook-form"
 import { toast } from "sonner"
-import ProductCard from "./components/ProductCard"
 import SearchProduct from "./components/SearchProduct"
 import SelectQuantityFlavors from "./components/SelectQuantityFlavors"
-import IngredientManager from "./components/IngredientManager"
+import MenuCategorieSelect from "./components/MenuCategorieSelect"
+import ProductsList from "./components/ProductsList"
+import IngredientCustomizer from "./components/IngredientCustomizer"
+import FieldsItem from "./components/FieldsItem"
 
 type Props = {
   menuCategories: MenuCategoryDTO[]
@@ -29,7 +27,7 @@ type Customization = {
 const emptyCustom: Customization = { added: [], removed: [] }
 
 const OrderItemsBuilder = ({ menuCategories }: Props) => {
-  const { control, formState } = useFormContext<ManualOrderFormInput>()
+  const { control } = useFormContext<ManualOrderFormInput>()
   const { fields, append, remove } = useFieldArray({ control, name: "items" })
 
   const [selectedCategoryId, setSelectedCategoryId] = useState(
@@ -157,36 +155,17 @@ const OrderItemsBuilder = ({ menuCategories }: Props) => {
 
   return (
     <div className="space-y-6">
-      <ScrollArea className="w-full">
-        <Separator className="my-4 bg-gray-300" />
-        <div className="flex items-center justify-center gap-4">
-          {menuCategories.map((category) => (
-            <Button
-              key={category.id}
-              type="button"
-              size="sm"
-              variant={
-                selectedCategory.id === category.id ? "default" : "secondary"
-              }
-              onClick={() => handleCategoryClick(category)}
-            >
-              {category.name}
-            </Button>
-          ))}
-        </div>
-        <Separator className="my-4 bg-gray-300" />
-        <ScrollBar orientation="horizontal" />
-      </ScrollArea>
+      <MenuCategorieSelect
+        menuCategories={menuCategories}
+        selectedCategoryId={selectedCategory.id}
+        onSelectCategory={handleCategoryClick}
+      />
 
-      <section className="flex flex-col items-center gap-2">
-        <h3 className="px-5 pt-2 text-center text-2xl font-semibold">
-          {selectedCategory.name}
-        </h3>
-        <SearchProduct
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-        />
-      </section>
+      <SearchProduct
+        searchValue={searchValue}
+        setSearchValue={setSearchValue}
+        label={selectedCategory.name}
+      />
 
       {selectedCategory.isDouble && (
         <SelectQuantityFlavors
@@ -195,113 +174,28 @@ const OrderItemsBuilder = ({ menuCategories }: Props) => {
         />
       )}
 
-      <section className="scrollbar overflow-x-auto pb-2">
-        <div className="flex w-max gap-4">
-          {filteredProducts.map((product) => (
-            <div key={product.id} className="w-110 shrink-0">
-              <ProductCard
-                product={product}
-                isSelected={selectedIds.includes(product.id)}
-                onSelect={() => handleSelectProduct(product.id)}
-                disabled={
-                  !selectedIds.includes(product.id) &&
-                  selectedIds.length >= maxSelections
-                }
-              />
-            </div>
-          ))}
-        </div>
-      </section>
+      <ProductsList
+        products={filteredProducts}
+        onSelect={handleSelectProduct}
+        selectedIds={selectedIds}
+        maxSelections={maxSelections}
+      />
 
-      {selectedIds.map((productId, index) => {
-        const product = selectedCategory.products.find(
-          (p) => p.id === productId,
-        )
-        if (!product) return null
+      <IngredientCustomizer
+        selectedIds={selectedIds}
+        selectedCategory={selectedCategory}
+        isDouble={isDouble}
+        handleAddItem={handleAddItem}
+        updateCustom={updateCustom}
+        quantity={quantity}
+        setQuantity={setQuantity}
+      />
 
-        const removable: ManageableIngredientDTO[] = (
-          product.ingredients ?? []
-        ).map((name) => ({ name }))
-        const addable = selectedCategory.additionalIngredients.filter(
-          (ing) => ing.isActive !== false,
-        )
-
-        return (
-          <div key={productId} className="mx-auto w-full max-w-xl space-y-3">
-            {isDouble && (
-              <p className="text-sm font-semibold">
-                ½ {product.name} (sabor {index + 1})
-              </p>
-            )}
-
-            {removable.length > 0 && (
-              <IngredientManager
-                title="Retirar ingrediente"
-                ingredients={removable}
-                onChangeDelete={(names) =>
-                  updateCustom(productId, { removed: names })
-                }
-              />
-            )}
-
-            {addable.length > 0 && (
-              <IngredientManager
-                title="Adicionar ingrediente"
-                ingredients={addable}
-                onChange={(items) => updateCustom(productId, { added: items })}
-              />
-            )}
-          </div>
-        )
-      })}
-
-      <div className="mx-auto flex w-full max-w-xl items-center gap-3">
-        <Input
-          type="number"
-          min={1}
-          className="w-24"
-          value={quantity}
-          onChange={(e) =>
-            setQuantity(Math.max(1, e.target.valueAsNumber || 1))
-          }
-        />
-        <Button type="button" className="flex-1" onClick={handleAddItem}>
-          Adicionar ao pedido
-        </Button>
-      </div>
-
-      {/* Carrinho provisório, só pra você enxergar o que está no form */}
-      <section className="mx-auto w-full max-w-xl space-y-2">
-        {fields.map((field, index) => (
-          <div
-            key={field.id}
-            className="flex items-center justify-between rounded-md border p-2 text-sm"
-          >
-            <span>
-              {field.quantity}x{" "}
-              {field.isDouble
-                ? `½ ${field.flavor1Name} + ½ ${field.flavor2Name}`
-                : (menuCategories
-                    .flatMap((c) => c.products)
-                    .find((p) => p.id === field.productId)?.name ?? "Produto")}
-            </span>
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => remove(index)}
-            >
-              Remover
-            </Button>
-          </div>
-        ))}
-
-        {formState.errors.items?.message && (
-          <p className="text-destructive text-sm">
-            {formState.errors.items.message}
-          </p>
-        )}
-      </section>
+      <FieldsItem
+        fields={fields}
+        onRemove={remove}
+        menuCategories={menuCategories}
+      />
     </div>
   )
 }
