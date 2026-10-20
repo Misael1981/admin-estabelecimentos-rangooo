@@ -39,6 +39,7 @@ export async function getManualOrderData(slug: string) {
           },
         },
         menuCategories: {
+          orderBy: [{ displayOrder: "desc" }, { name: "asc" }],
           select: {
             id: true,
             name: true,

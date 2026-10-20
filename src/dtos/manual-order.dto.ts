@@ -1,3 +1,25 @@
+import { AreaType } from "@/constants/enums"
+
+export interface AddressDTO {
+  number: string
+  id: string
+  city: string
+  complement: string | null
+  neighborhood: string
+  state: string
+  street: string
+  reference: string | null
+  areaType: AreaType
+}
+
+export interface CustomerDTO {
+  name: string
+  id: string
+  phone: string | null
+  customerCode: number
+  addresses: AddressDTO[]
+}
+
 export interface OrderItem {
   id: string
   isDouble: boolean

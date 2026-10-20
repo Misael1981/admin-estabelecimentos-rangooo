@@ -18,27 +18,12 @@ import DeliveryFields from "./components/DeliveryFields"
 import { AnimatePresence, motion } from "framer-motion"
 import DineInFields from "./components/DineInFields"
 import MenuCategorySelector from "./components/MenuCategorySelector"
+import { CustomerDTO, MenuCategoryDTO } from "@/dtos/manual-order.dto"
+import SearchCustomer from "../SearchCustomer"
 
 type ManualOrderFormProps = {
   establishment: {
-    menuCategories: {
-      products: {
-        price: number
-        name: string
-        id: string
-        description: string | null
-        imageUrl: string | null
-        ingredients: string[]
-        orderItems: {
-          id: string
-          isDouble: boolean
-        }[]
-      }[]
-      name: string
-      id: string
-      displayOrder: number
-      isDouble: boolean
-    }[]
+    menuCategories: MenuCategoryDTO[]
     name: string
     id: string
     slug: string
@@ -47,6 +32,7 @@ type ManualOrderFormProps = {
       method: ConsumptionMethod
       isActive: boolean
     }[]
+    customers: CustomerDTO[]
   }
 }
 
@@ -88,6 +74,52 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
 
   const { handleSubmit, setValue, watch } = methods
 
+  const emptyAddress = {
+    street: "",
+    number: "",
+    complement: "",
+    neighborhood: "",
+    city: "",
+    state: "",
+    reference: "",
+  }
+
+  const handleSelectCustomer = (customer: CustomerDTO) => {
+    setValue("customerName", customer.name, { shouldValidate: true })
+    setValue("customerPhone", customer.phone ?? "", { shouldValidate: true })
+    setValue("customerCode", customer.customerCode)
+
+    const address = customer.addresses[0]
+
+    setValue(
+      "address",
+      address
+        ? {
+            street: address.street,
+            number: address.number,
+            complement: address.complement ?? "",
+            neighborhood: address.neighborhood,
+            city: address.city,
+            state: address.state,
+            reference: address.reference ?? "",
+          }
+        : emptyAddress,
+      { shouldValidate: true },
+    )
+
+    setValue("areaType", address?.areaType ?? AreaType.URBAN, {
+      shouldValidate: true,
+    })
+  }
+
+  const handleClearCustomer = () => {
+    setValue("customerName", "")
+    setValue("customerPhone", "")
+    setValue("customerCode", undefined as never)
+    setValue("address", emptyAddress)
+    setValue("areaType", AreaType.URBAN)
+  }
+
   const selectedMethod: ManualOrderFormValue["consumptionMethod"] =
     activeMethods.some((method) => method.method === requestedMethod)
       ? (requestedMethod as ManualOrderFormValue["consumptionMethod"])
@@ -99,6 +131,7 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
     })
   }, [selectedMethod, setValue])
 
+  // eslint-disable-next-line
   const consumptionMethod = watch("consumptionMethod")
 
   const onSubmit = async (data: ManualOrderFormInput) => {
@@ -126,6 +159,19 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
           slug={establishment.slug}
         />
 
+        {consumptionMethod !== ConsumptionMethod.DINE_IN && (
+          <section className="flex flex-col items-center gap-2">
+            <h3 className="px-5 pt-2 text-center text-2xl font-semibold">
+              Buscar Clientes
+            </h3>
+            <SearchCustomer
+              customers={establishment.customers}
+              onSelect={handleSelectCustomer}
+              onClear={handleClearCustomer}
+            />
+          </section>
+        )}
+
         <AnimatePresence mode="wait">
           {consumptionMethod === ConsumptionMethod.DINE_IN && (
             <motion.div
@@ -139,7 +185,6 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
               <DineInFields />
             </motion.div>
           )}
-
           {consumptionMethod === ConsumptionMethod.DELIVERY && (
             <motion.div
               key="delivery"
@@ -152,7 +197,6 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
               <DeliveryFields />
             </motion.div>
           )}
-
           {consumptionMethod === ConsumptionMethod.PICKUP && (
             <motion.div
               key="pickup"
