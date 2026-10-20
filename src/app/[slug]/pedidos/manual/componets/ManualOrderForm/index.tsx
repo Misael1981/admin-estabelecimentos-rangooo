@@ -17,9 +17,9 @@ import PickupFields from "./components/PickupFields"
 import DeliveryFields from "./components/DeliveryFields"
 import { AnimatePresence, motion } from "framer-motion"
 import DineInFields from "./components/DineInFields"
-import MenuCategorySelector from "./components/MenuCategorySelector"
 import { CustomerDTO, MenuCategoryDTO } from "@/dtos/manual-order.dto"
 import SearchCustomer from "../SearchCustomer"
+import OrderItemsBuilder from "./components/OrderItemsBuilder"
 
 type ManualOrderFormProps = {
   establishment: {
@@ -50,30 +50,6 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
   const defaultConsumptionMethod = (activeMethods[0]?.method ??
     "DELIVERY") as ManualOrderFormValue["consumptionMethod"]
 
-  const methods = useForm<ManualOrderFormInput, unknown, ManualOrderFormValue>({
-    resolver: zodResolver(manualOrderSchema),
-    defaultValues: {
-      consumptionMethod: defaultConsumptionMethod,
-      customerName: "",
-      customerPhone: "",
-      customerCode: undefined,
-      pickupTime: undefined,
-
-      areaType: AreaType.URBAN,
-      address: {
-        street: "",
-        number: "",
-        complement: "",
-        neighborhood: "",
-        city: "",
-        state: "",
-        reference: "",
-      },
-    },
-  })
-
-  const { handleSubmit, setValue, watch } = methods
-
   const emptyAddress = {
     street: "",
     number: "",
@@ -83,6 +59,35 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
     state: "",
     reference: "",
   }
+
+  const methods = useForm<ManualOrderFormInput, unknown, ManualOrderFormValue>({
+    resolver: zodResolver(manualOrderSchema),
+    defaultValues: {
+      consumptionMethod: defaultConsumptionMethod,
+
+      // Itens e observações (comuns aos 3 métodos)
+      items: [],
+      notes: "",
+
+      // Cliente (DELIVERY e PICKUP)
+      customerName: "",
+      customerPhone: "",
+      customerCode: undefined,
+
+      // PICKUP
+      pickupTime: "",
+
+      // DINE_IN
+      tableNumber: "",
+      peopleCount: undefined,
+
+      // DELIVERY
+      areaType: AreaType.URBAN,
+      address: emptyAddress,
+    },
+  })
+
+  const { handleSubmit, setValue, watch } = methods
 
   const handleSelectCustomer = (customer: CustomerDTO) => {
     setValue("customerName", customer.name, { shouldValidate: true })
@@ -211,7 +216,7 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
           )}
         </AnimatePresence>
 
-        <MenuCategorySelector menuCategories={establishment.menuCategories} />
+        <OrderItemsBuilder menuCategories={establishment.menuCategories} />
 
         <div className="flex w-full justify-center">
           <Button

@@ -41,4 +41,12 @@ export interface MenuCategoryDTO {
   displayOrder: number
   isDouble: boolean
   products: ProductDTO[]
+  additionalIngredients: ManageableIngredientDTO[]
+}
+
+export type ManageableIngredientDTO = {
+  id?: string
+  name: string
+  price?: number
+  isActive?: boolean
 }

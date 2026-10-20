@@ -45,6 +45,14 @@ export async function getManualOrderData(slug: string) {
             name: true,
             displayOrder: true,
             isDouble: true,
+            additionalIngredients: {
+              select: {
+                id: true,
+                name: true,
+                price: true,
+                isActive: true,
+              },
+            },
             products: {
               select: {
                 id: true,
@@ -85,6 +93,10 @@ export async function getManualOrderData(slug: string) {
         products: category.products.map((product) => ({
           ...product,
           price: product.price.toNumber(),
+        })),
+        additionalIngredients: category.additionalIngredients.map((ing) => ({
+          ...ing,
+          price: ing.price.toNumber(),
         })),
       })),
     }
