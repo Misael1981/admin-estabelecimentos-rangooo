@@ -27,6 +27,7 @@ type CategorySummary = {
   id: string
   name: string
   isDouble: boolean
+  displayOrder: number
   productsCount: number
 }
 
@@ -47,6 +48,7 @@ const MenuCategoriesList = ({
 }: Props) => {
   const [name, setName] = useState("")
   const [isDouble, setIsDouble] = useState(false)
+  const [displayOrder, setDisplayOrder] = useState(0)
   const [editingId, setEditingId] = useState<string | null>(null)
 
   const isEditing = editingId !== null
@@ -54,6 +56,7 @@ const MenuCategoriesList = ({
   const resetForm = () => {
     setName("")
     setIsDouble(false)
+    setDisplayOrder(0)
     setEditingId(null)
   }
 
@@ -61,6 +64,7 @@ const MenuCategoriesList = ({
     setEditingId(table.id)
     setName(table.name)
     setIsDouble(table.isDouble)
+    setDisplayOrder(table.displayOrder)
   }
 
   const handleSubmit = async () => {
@@ -70,8 +74,19 @@ const MenuCategoriesList = ({
 
     try {
       const result = isEditing
-        ? await updateCategory({ id: editingId, name, isDouble, slug })
-        : await createCategory({ name, isDouble, slug })
+        ? await updateCategory({
+            id: editingId,
+            name,
+            isDouble,
+            slug,
+            displayOrder,
+          })
+        : await createCategory({
+            name,
+            isDouble,
+            slug,
+            displayOrder,
+          })
 
       if (result.success) {
         toast.success(
@@ -134,21 +149,50 @@ const MenuCategoriesList = ({
         </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-4">
-        <Input
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          className="w-full"
-          placeholder="Ex: Pizzas, Bebidas, Promoções..."
-        />
+        <div className="grid w-full gap-4 lg:grid-cols-[1fr_140px]">
+          <Field>
+            <FieldLabel htmlFor="categoryName">Nome da tabela</FieldLabel>
+            <Input
+              id="categoryName"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Ex: Pizzas, Bebidas, Promoções..."
+            />
+          </Field>
 
-        <Field orientation="horizontal" className="w-1/3">
-          <Switch
-            id="isDouble"
-            checked={isDouble}
-            onCheckedChange={setIsDouble}
-          />
-          <FieldLabel htmlFor="isDouble">Incluir 2 sabores</FieldLabel>
-        </Field>
+          <Field>
+            <FieldLabel htmlFor="displayOrder">Posição</FieldLabel>
+            <Input
+              id="displayOrder"
+              type="number"
+              min={0}
+              value={displayOrder}
+              onChange={(e) => setDisplayOrder(e.target.valueAsNumber || 0)}
+            />
+          </Field>
+
+          <label
+            htmlFor="isDouble"
+            className={`flex cursor-pointer items-center justify-between gap-4 rounded-md border p-3 transition-all lg:col-span-2 ${
+              isDouble
+                ? "border-primary/20 bg-primary/10"
+                : "border-gray-400 hover:bg-gray-800"
+            }`}
+          >
+            <div>
+              <p className="text-sm font-medium">Permitir 2 sabores</p>
+              <p className="text-muted-foreground text-xs">
+                Ideal para pizzas: o cliente escolhe 1/2 de um sabor e 1/2 de
+                outro.
+              </p>
+            </div>
+            <Switch
+              id="isDouble"
+              checked={isDouble}
+              onCheckedChange={setIsDouble}
+            />
+          </label>
+        </div>
 
         <div className="flex w-full gap-2">
           {isEditing && (

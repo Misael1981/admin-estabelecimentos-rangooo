@@ -36,6 +36,7 @@ const ManageMenu = ({
     id: cat.id,
     name: cat.name,
     isDouble: cat.isDouble,
+    displayOrder: cat.displayOrder,
     productsCount: cat.products?.length ?? 0,
   }))
 

@@ -1,5 +1,6 @@
-import { db } from "@/lib/prisma"
 import "server-only"
+
+import { db } from "@/lib/prisma"
 
 export async function getManualOrderData(slug: string) {
   try {
@@ -14,6 +15,27 @@ export async function getManualOrderData(slug: string) {
             id: true,
             isActive: true,
             method: true,
+          },
+        },
+        customers: {
+          select: {
+            id: true,
+            name: true,
+            phone: true,
+            customerCode: true,
+            addresses: {
+              select: {
+                id: true,
+                street: true,
+                number: true,
+                complement: true,
+                neighborhood: true,
+                reference: true,
+                city: true,
+                state: true,
+                areaType: true,
+              },
+            },
           },
         },
         menuCategories: {

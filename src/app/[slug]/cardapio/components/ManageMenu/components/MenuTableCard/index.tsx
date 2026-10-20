@@ -16,6 +16,7 @@ type CategorySummary = {
   id: string
   name: string
   isDouble: boolean
+  displayOrder: number
   productsCount: number
 }
 
@@ -56,6 +57,9 @@ const MenuTableCard = ({
         <p className="font-medium">{table.name}</p>
         <p className="text-xs text-gray-500">
           {table.productsCount} produto(s)
+        </p>
+        <p className="text-xs text-gray-500">
+          Ordem de Exibição: {table.displayOrder}
         </p>
         {table.isDouble && <p className="text-xs text-amber-400">2 Sabores</p>}
       </div>

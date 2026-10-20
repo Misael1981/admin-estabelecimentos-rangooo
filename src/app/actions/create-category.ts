@@ -8,6 +8,7 @@ const createCategorySchema = z.object({
   name: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres."),
   isDouble: z.boolean().default(false),
   slug: z.string().min(1),
+  displayOrder: z.number().int().min(0).optional(),
 })
 
 export type CreateCategoryInput = z.input<typeof createCategorySchema>
@@ -17,6 +18,7 @@ const updateCategorySchema = z.object({
   name: z.string().trim().min(3, "O nome deve ter pelo menos 3 caracteres."),
   isDouble: z.boolean(),
   slug: z.string().min(1),
+  displayOrder: z.number().int().min(0),
 })
 
 export async function createCategory(input: CreateCategoryInput) {
@@ -27,7 +29,7 @@ export async function createCategory(input: CreateCategoryInput) {
       return { success: false, error: parsed.error.issues[0].message }
     }
 
-    const { name, isDouble, slug } = parsed.data
+    const { name, isDouble, slug, displayOrder } = parsed.data
 
     const restaurant = await prisma.restaurant.findUnique({
       where: { slug },
@@ -46,7 +48,8 @@ export async function createCategory(input: CreateCategoryInput) {
       select: { displayOrder: true },
     })
 
-    const nextOrder = lastCategory ? lastCategory.displayOrder + 1 : 0
+    const nextOrder =
+      displayOrder ?? (lastCategory ? lastCategory.displayOrder + 1 : 0)
 
     const newCategory = await prisma.menuCategory.create({
       data: {
@@ -76,11 +79,11 @@ export async function updateCategory(
       return { success: false, error: parsed.error.issues[0].message }
     }
 
-    const { id, name, isDouble, slug } = parsed.data
+    const { id, name, isDouble, slug, displayOrder } = parsed.data
 
     const result = await prisma.menuCategory.updateMany({
       where: { id, restaurant: { slug } },
-      data: { name, isDouble },
+      data: { name, isDouble, displayOrder },
     })
 
     if (result.count === 0) {
