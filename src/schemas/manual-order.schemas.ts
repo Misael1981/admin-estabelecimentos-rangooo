@@ -2,6 +2,11 @@ import { AreaType } from "@/constants/enums"
 import { emptyToNull } from "@/helpers/empty-to-null"
 import z from "zod"
 
+const additionalIngredientSchema = z.object({
+  id: z.string().min(1).optional(),
+  name: z.string().min(1),
+})
+
 // 1. Schema para os itens do carrinho/pedido
 const orderItemSchema = z
   .object({
@@ -26,7 +31,7 @@ const orderItemSchema = z
     flavor2additionalIngredients: z.any().optional().nullable(),
 
     // Adicionais gerais do item
-    additionalIngredients: z.any().optional().nullable(),
+    additionalIngredients: z.array(additionalIngredientSchema).default([]),
   })
   .superRefine((item, ctx) => {
     if (item.isDouble && (!item.flavor1Id || !item.flavor2Id)) {

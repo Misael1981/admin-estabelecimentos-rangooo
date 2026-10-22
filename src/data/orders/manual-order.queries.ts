@@ -9,6 +9,7 @@ export async function getManualOrderData(slug: string) {
       select: {
         id: true,
         name: true,
+        deliveryFee: true,
         slug: true,
         consumptionMethods: {
           select: {
@@ -88,6 +89,7 @@ export async function getManualOrderData(slug: string) {
 
     return {
       ...establishment,
+      deliveryFee: establishment.deliveryFee?.toNumber(),
       menuCategories: establishment.menuCategories.map((category) => ({
         ...category,
         products: category.products.map((product) => ({

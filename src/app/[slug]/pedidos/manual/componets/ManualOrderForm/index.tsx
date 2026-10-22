@@ -20,6 +20,7 @@ import DineInFields from "./components/DineInFields"
 import { CustomerDTO, MenuCategoryDTO } from "@/dtos/manual-order.dto"
 import SearchCustomer from "../SearchCustomer"
 import OrderItemsBuilder from "./components/OrderItemsBuilder"
+import OrderSummary from "../OrderSummary"
 
 type ManualOrderFormProps = {
   establishment: {
@@ -34,9 +35,13 @@ type ManualOrderFormProps = {
     }[]
     customers: CustomerDTO[]
   }
+  deliveryFees: Partial<Record<string, number>>
 }
 
-const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
+const ManualOrderForm = ({
+  establishment,
+  deliveryFees,
+}: ManualOrderFormProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
 
@@ -217,6 +222,11 @@ const ManualOrderForm = ({ establishment }: ManualOrderFormProps) => {
         </AnimatePresence>
 
         <OrderItemsBuilder menuCategories={establishment.menuCategories} />
+
+        <OrderSummary
+          menuCategories={establishment.menuCategories}
+          deliveryFees={deliveryFees}
+        />
 
         <div className="flex w-full justify-center">
           <Button
