@@ -1,8 +1,7 @@
 "use client"
 
 import { buttonVariants } from "@/components/ui/button"
-import { Card } from "@/components/ui/card"
-import { Field, FieldError, FieldLabel } from "@/components/ui/field"
+import { Field, FieldError } from "@/components/ui/field"
 import { ConsumptionMethod } from "@/constants/enums"
 import { CONSUMPTION_METHOD_LABEL } from "@/constants/labels"
 import { ManualOrderFormValue } from "@/schemas/manual-order.schemas"
@@ -29,7 +28,8 @@ const ConsumptionMethodFields = ({
     formState: { errors },
   } = form
 
-  const selectedMethod = searchParams.get("consumptionMethod")
+  const currentMethod = form.watch("consumptionMethod")
+  const selectedMethod = searchParams.get("consumptionMethod") ?? currentMethod
 
   return (
     <Field>

@@ -22,8 +22,6 @@ export default async function ManualOrderPage({ params }: ManualOrderProps) {
     notFound()
   }
 
-  console.log("Preço da entrega", establishment.deliveryFee)
-
   return (
     <div className="space-y-8">
       <HeaderOrdersPage slug={slug} />
