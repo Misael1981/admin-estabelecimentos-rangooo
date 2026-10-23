@@ -23,6 +23,7 @@ const PickupFields = () => {
 
   const {
     register,
+    watch,
     setValue,
     formState: { errors },
   } = form
@@ -35,11 +36,14 @@ const PickupFields = () => {
 
       <FieldGroup className="space-y-4">
         <div className="flex justify-end">
-          <Field className="max-w-xs">
-            <FieldLabel>Código do Cliente</FieldLabel>
-            <Input {...register("customerCode")} type="number" />
-            <FieldError>{errors.customerCode?.message}</FieldError>
-          </Field>
+          <div className="bg-muted/50 flex max-w-xs items-center justify-between rounded-lg border p-3">
+            <p className="text-muted-foreground text-sm font-medium">
+              Código do Cliente:{" "}
+              <strong className="text-primary text-base font-bold">
+                {watch("customerCode")}
+              </strong>
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 lg:flex-row">

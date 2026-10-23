@@ -29,6 +29,7 @@ export default async function ManualOrderPage({ params }: ManualOrderProps) {
       <ManualOrderForm
         establishment={establishment}
         deliveryFees={deliveryFees}
+        nextCustomerCode={establishment.nextCustomerCode}
       />
     </div>
   )

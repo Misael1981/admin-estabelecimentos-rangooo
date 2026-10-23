@@ -14,6 +14,7 @@ import MenuCategorieSelect from "./components/MenuCategorieSelect"
 import ProductsList from "./components/ProductsList"
 import IngredientCustomizer from "./components/IngredientCustomizer"
 import FieldsItem from "./components/FieldsItem"
+import { toAdded } from "@/helpers/to-added"
 
 type Props = {
   menuCategories: MenuCategoryDTO[]
@@ -110,11 +111,6 @@ const OrderItemsBuilder = ({ menuCategories }: Props) => {
 
     const [first, second] = selectedIds
 
-    const nameOf = (id?: string) =>
-      selectedCategory.products.find((p) => p.id === id)?.name ?? null
-
-    const joinNames = (names: string[]) => names.join(", ") || null
-
     const c1 = getCustom(first)
     const c2 = isDouble && second ? getCustom(second) : emptyCustom
 
@@ -125,20 +121,20 @@ const OrderItemsBuilder = ({ menuCategories }: Props) => {
             quantity,
             isDouble: true,
             flavor1Id: first,
-            flavor1Name: nameOf(first),
-            flavor1Removed: joinNames(c1.removed),
-            flavor1additionalIngredients: c1.added,
+            flavor1Removed: c1.removed,
+            flavor1additionalIngredients: toAdded(c1.added),
             flavor2Id: second,
-            flavor2Name: nameOf(second),
-            flavor2Removed: joinNames(c2.removed),
-            flavor2additionalIngredients: c2.added,
+            flavor2Removed: c2.removed,
+            flavor2additionalIngredients: toAdded(c2.added),
           }
         : {
             productId: first,
             quantity,
             isDouble: false,
-            removedIngredients: joinNames(c1.removed),
-            additionalIngredients: c1.added,
+            removedIngredients: c1.removed.length
+              ? JSON.stringify(c1.removed)
+              : null,
+            additionalIngredients: toAdded(c1.added),
           },
     )
 

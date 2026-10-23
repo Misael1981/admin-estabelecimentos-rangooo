@@ -1,4 +1,4 @@
-import { AreaType } from "@/constants/enums"
+import { AreaType, PaymentMethod } from "@/constants/enums"
 import { emptyToNull } from "@/helpers/empty-to-null"
 import z from "zod"
 
@@ -7,31 +7,37 @@ const additionalIngredientSchema = z.object({
   name: z.string().min(1),
 })
 
+const decimalSchema = z.union([
+  z.number(),
+  z.string().regex(/^\d+(\.\d{1,2})?$/, "Valor numérico inválido"),
+])
+
 // 1. Schema para os itens do carrinho/pedido
 const orderItemSchema = z
   .object({
     productId: z.string().min(1, "Produto obrigatório"),
     quantity: z.number().int().positive("A quantidade deve ser maior que zero"),
+    isDouble: z.boolean().default(false),
 
     // Customizações do item
+    removedIngredients: z.string().optional().nullable(),
+    additionalIngredients: z.array(additionalIngredientSchema).default([]),
+
     customName: z.string().optional().nullable(),
     extras: z.string().optional().nullable(),
-    removedIngredients: z.string().optional().nullable(),
 
-    // Se o seu sistema suporta 2 sabores de pizza, por exemplo:
-    isDouble: z.boolean().default(false),
-    flavor1Id: z.string().optional().nullable(),
-    flavor1Name: z.string().optional().nullable(),
-    flavor1Removed: z.string().optional().nullable(),
-    flavor1additionalIngredients: z.any().optional().nullable(), // ou seu tipo customizado de adicionais
+    // 2 Sabores
+    flavor1Id: z.string().nullish(),
+    flavor1Removed: z.array(z.string()).default([]),
+    flavor1additionalIngredients: z
+      .array(additionalIngredientSchema)
+      .default([]),
 
-    flavor2Id: z.string().optional().nullable(),
-    flavor2Name: z.string().optional().nullable(),
-    flavor2Removed: z.string().optional().nullable(),
-    flavor2additionalIngredients: z.any().optional().nullable(),
-
-    // Adicionais gerais do item
-    additionalIngredients: z.array(additionalIngredientSchema).default([]),
+    flavor2Id: z.string().nullish(),
+    flavor2Removed: z.array(z.string()).default([]),
+    flavor2additionalIngredients: z
+      .array(additionalIngredientSchema)
+      .default([]),
   })
   .superRefine((item, ctx) => {
     if (item.isDouble && (!item.flavor1Id || !item.flavor2Id)) {
@@ -67,6 +73,9 @@ const deliverySchema = z.object({
   customerName: z.string().min(1, "Nome é obrigatório"),
   customerPhone: z.string().min(1, "Telefone é obrigatório"),
   customerCode: z.number().int().positive().optional(),
+
+  paymentMethod: z.enum(PaymentMethod).default("PIX"),
+  changeAmount: decimalSchema.optional().default(0),
 
   // Endereço
   areaType: z.enum(AreaType).default("URBAN"),

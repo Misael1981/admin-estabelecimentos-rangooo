@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
-import { AreaType, ConsumptionMethod } from "@/constants/enums"
+import { AreaType, ConsumptionMethod, PaymentMethod } from "@/constants/enums"
 import {
   ManualOrderFormInput,
   ManualOrderFormValue,
@@ -21,6 +21,7 @@ import { CustomerDTO, MenuCategoryDTO } from "@/dtos/manual-order.dto"
 import SearchCustomer from "../SearchCustomer"
 import OrderItemsBuilder from "./components/OrderItemsBuilder"
 import OrderSummary from "../OrderSummary"
+import { createManualOrder } from "@/app/actions/manual-order/create-order"
 
 type ManualOrderFormProps = {
   establishment: {
@@ -36,11 +37,13 @@ type ManualOrderFormProps = {
     customers: CustomerDTO[]
   }
   deliveryFees: Partial<Record<string, number>>
+  nextCustomerCode: number
 }
 
 const ManualOrderForm = ({
   establishment,
   deliveryFees,
+  nextCustomerCode,
 }: ManualOrderFormProps) => {
   const router = useRouter()
   const [isPending, startTransition] = useTransition()
@@ -77,7 +80,7 @@ const ManualOrderForm = ({
       // Cliente (DELIVERY e PICKUP)
       customerName: "",
       customerPhone: "",
-      customerCode: undefined,
+      customerCode: nextCustomerCode,
 
       // PICKUP
       pickupTime: "",
@@ -87,6 +90,8 @@ const ManualOrderForm = ({
       peopleCount: undefined,
 
       // DELIVERY
+      paymentMethod: PaymentMethod.PIX,
+      changeAmount: undefined,
       areaType: AreaType.URBAN,
       address: emptyAddress,
     },
@@ -147,9 +152,15 @@ const ManualOrderForm = ({
   const onSubmit = async (data: ManualOrderFormInput) => {
     startTransition(async () => {
       try {
-        toast.success("Pedido efetuado com sucesso!")
-        console.log("Pedido efetuado: ", data)
-        router.push(`/${establishment.slug}/pedidos`)
+        const result = await createManualOrder(establishment.slug, data)
+
+        if (result.success) {
+          toast.success("Pedido efetuado com sucesso!")
+          router.push(`/${establishment.slug}/pedidos`)
+        } else {
+          toast.error("Erro ao criar pedido")
+          console.log(result.error)
+        }
       } catch (error) {
         console.error("Erro ao registrar pedido:", error)
         toast.error("Ocorreu um erro ao registrar pedido.")

@@ -1,6 +1,7 @@
 import {
   AreaType,
   ConsumptionMethod,
+  PaymentMethod,
   PaymentReceiptStatus,
   PlanType,
   SubscriptionStatus,
@@ -8,6 +9,7 @@ import {
 import {
   AREA_TYPE_LABEL,
   CONSUMPTION_METHOD_LABEL,
+  PAYMENT_METHOD_LABEL,
   PAYMENT_RECEIPT_LABELS,
   SUBSCRIPTION_STATUS_LABELS,
 } from "./labels"
@@ -97,5 +99,24 @@ export const AREA_TYPE_OPTIONS = [
   {
     value: AreaType.DISTRICT,
     label: AREA_TYPE_LABEL[AreaType.DISTRICT],
+  },
+]
+
+export const PAYMENT_METHOD_OPTIONS = [
+  {
+    value: PaymentMethod.CASH,
+    label: PAYMENT_METHOD_LABEL[PaymentMethod.CASH],
+  },
+  {
+    value: PaymentMethod.PIX,
+    label: PAYMENT_METHOD_LABEL[PaymentMethod.PIX],
+  },
+  {
+    value: PaymentMethod.CREDIT_CARD,
+    label: PAYMENT_METHOD_LABEL[PaymentMethod.CREDIT_CARD],
+  },
+  {
+    value: PaymentMethod.DEBIT_CARD,
+    label: PAYMENT_METHOD_LABEL[PaymentMethod.DEBIT_CARD],
   },
 ]

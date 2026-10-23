@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { Textarea } from "@/components/ui/textarea"
-import { AREA_TYPE_OPTIONS } from "@/constants/options"
+import { AREA_TYPE_OPTIONS, PAYMENT_METHOD_OPTIONS } from "@/constants/options"
 import { formatPhoneNumber } from "@/helpers/format-phone-number"
 import { maskState } from "@/helpers/mask-state"
 import { ManualOrderFormValue } from "@/schemas/manual-order.schemas"
@@ -32,8 +32,12 @@ const DeliveryFields = () => {
 
   const {
     register,
+    control,
+    watch,
     formState: { errors },
   } = form
+
+  const paymentMethod = form.watch("paymentMethod")
 
   return (
     <Card className="space-y-6 p-4">
@@ -41,11 +45,14 @@ const DeliveryFields = () => {
 
       <FieldGroup className="space-y-4">
         <div className="flex justify-end">
-          <Field className="max-w-xs">
-            <FieldLabel>Código do Cliente</FieldLabel>
-            <Input {...register("customerCode")} type="number" />
-            <FieldError>{errors.customerCode?.message}</FieldError>
-          </Field>
+          <div className="bg-muted/50 flex max-w-xs items-center justify-between rounded-lg border p-3">
+            <p className="text-muted-foreground text-sm font-medium">
+              Código do Cliente:{" "}
+              <strong className="text-primary text-base font-bold">
+                {watch("customerCode")}
+              </strong>
+            </p>
+          </div>
         </div>
 
         <div className="flex flex-col gap-4 lg:flex-row">
@@ -69,6 +76,67 @@ const DeliveryFields = () => {
             />
             <FieldError>{errors.customerPhone?.message}</FieldError>
           </Field>
+        </div>
+
+        <div className="flex flex-col gap-4 lg:flex-row">
+          <Field className="lg:max-w-1/2">
+            <FieldLabel>Método de Pagamento</FieldLabel>
+            <Controller
+              name="paymentMethod"
+              control={form.control}
+              render={({ field }) => (
+                <Select
+                  value={field.value ?? ""}
+                  onValueChange={field.onChange}
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Selecione..." />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PAYMENT_METHOD_OPTIONS.map((option) => (
+                      <SelectItem key={option.value} value={option.value}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
+            <FieldError>{errors.paymentMethod?.message}</FieldError>
+          </Field>
+
+          {/* Renderiza o input de troco APENAS se o método de pagamento for CASH */}
+          {paymentMethod === "CASH" && (
+            <Controller
+              control={control}
+              name="changeAmount"
+              render={({ field }) => (
+                <Field>
+                  <FieldLabel>Troco para: </FieldLabel>
+                  <Input
+                    type="text"
+                    inputMode="decimal"
+                    value={
+                      field.value != null
+                        ? Number(field.value).toLocaleString("pt-BR", {
+                            style: "currency",
+                            currency: "BRL",
+                          })
+                        : ""
+                    }
+                    onChange={(e) => {
+                      const digits = e.target.value.replace(/\D/g, "")
+                      const num = digits ? Number(digits) / 100 : undefined
+                      field.onChange(num)
+                    }}
+                    onBlur={field.onBlur}
+                    placeholder="R$ 0,00 (Opcional)"
+                  />
+                  <FieldError>{errors.changeAmount?.message}</FieldError>
+                </Field>
+              )}
+            />
+          )}
         </div>
 
         <CardTitle>Endereço</CardTitle>

@@ -1,6 +1,7 @@
 import {
   AreaType,
   ConsumptionMethod,
+  PaymentMethod,
   PaymentReceiptStatus,
   PlanType,
   SubscriptionStatus,
@@ -36,4 +37,11 @@ export const AREA_TYPE_LABEL: Record<AreaType, string> = {
   URBAN: "Perímetro Urbano",
   RURAL: "Zona Rural",
   DISTRICT: "Distrito",
+}
+
+export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
+  CASH: "Dinheiro",
+  PIX: "Pix",
+  CREDIT_CARD: "Cartão de Crédito",
+  DEBIT_CARD: "Cartão de Débito",
 }

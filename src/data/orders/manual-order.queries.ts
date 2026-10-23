@@ -1,6 +1,7 @@
 import "server-only"
 
 import { db } from "@/lib/prisma"
+import { getNextCustomerCode } from "./customer-code"
 
 export async function getManualOrderData(slug: string) {
   try {
@@ -87,6 +88,8 @@ export async function getManualOrderData(slug: string) {
 
     if (!establishment) return null
 
+    const nextCustomerCode = await getNextCustomerCode(db, establishment.id)
+
     return {
       ...establishment,
       deliveryFee: establishment.deliveryFee?.toNumber(),
@@ -101,6 +104,7 @@ export async function getManualOrderData(slug: string) {
           price: ing.price.toNumber(),
         })),
       })),
+      nextCustomerCode,
     }
   } catch (error) {
     console.error("Erro ao buscar dados do estabelecimento:", error)
