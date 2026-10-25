@@ -44,6 +44,13 @@ export async function getOrdersData(slug: string, method?: ConsumptionMethod) {
           },
         },
       },
+      customer: {
+        select: {
+          id: true,
+          name: true,
+          phone: true,
+        },
+      },
     },
     orderBy: { createdAt: "desc" },
   })
@@ -51,8 +58,8 @@ export async function getOrdersData(slug: string, method?: ConsumptionMethod) {
   // NORMALIZAÇÃO DIRETO NO SERVER
   const normalizedOrders = orders.map((order) => ({
     id: order.id,
-    customerName: order.user?.name ?? "Cliente Final",
-    customerPhone: order.user?.phone ?? "",
+    customerName: order.user?.name ?? order.customer?.name ?? "Cliente",
+    customerPhone: order.user?.phone ?? order.customer?.phone ?? "",
     totalAmount: Number(order.totalAmount),
     orderNumber: Number(order.orderNumber),
     status: order.status,

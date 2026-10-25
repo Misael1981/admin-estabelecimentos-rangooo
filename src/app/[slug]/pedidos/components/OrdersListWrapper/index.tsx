@@ -109,7 +109,7 @@ const OrdersListWrapper = ({
         activeOrders.map((order, index) => (
           <div
             key={`${order.id || "order"}-${index}`}
-            className="flex w-full flex-wrap justify-center gap-4"
+            className="w-full max-w-3xl"
           >
             <CardOrder
               order={order}
