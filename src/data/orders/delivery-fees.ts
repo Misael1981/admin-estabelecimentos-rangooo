@@ -1,19 +1,14 @@
 import "server-only"
-import { db } from "@/lib/prisma"
+
 import { DeliveryFees } from "@/dtos/delivery-fees.dto"
+import { db } from "@/lib/prisma"
 
 export async function getDeliveryFees(slug: string): Promise<DeliveryFees> {
   const restaurant = await db.restaurant.findUnique({
     where: { slug },
     select: {
-      id: true,
       useRangoooDelivery: true,
-      deliveryAreas: {
-        select: {
-          areaType: true,
-          fee: true,
-        },
-      },
+      deliveryAreas: { select: { areaType: true, fee: true } },
     },
   })
 
@@ -31,10 +26,7 @@ export async function getDeliveryFees(slug: string): Promise<DeliveryFees> {
     }
   }
 
-  const areas = await db.deliveryArea.findMany({
-    where: { restaurantId: restaurant.id },
-    select: { areaType: true, fee: true },
-  })
-
-  return Object.fromEntries(areas.map((a) => [a.areaType, a.fee]))
+  return Object.fromEntries(
+    restaurant.deliveryAreas.map((a) => [a.areaType, a.fee]),
+  )
 }

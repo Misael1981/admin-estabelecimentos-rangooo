@@ -15,10 +15,10 @@ import {
   PriceCatalog,
 } from "@/lib/pricing/order-total"
 import { Prisma } from "@misael1981/rangooo-database"
-import { getDeliveryFees } from "@/data/orders/delivery-fees"
 import { getNextCustomerCode } from "@/data/orders/customer-code"
 import { generateOrderNumber } from "@/services/order-number.service"
 import { AreaType } from "@/constants/enums"
+import { getDeliveryFees } from "@/data/orders/delivery-fees"
 
 class OrderError extends Error {}
 
@@ -64,6 +64,7 @@ export async function createManualOrder(
     if (!restaurant)
       return { success: false, error: "Restaurante não encontrado." }
 
+    //Futuramente
     // TODO: conferir que session.user é dono/funcionário DESTE restaurante
     // await assertCanManageRestaurant(session.user.id, restaurant.id)
 
@@ -124,7 +125,8 @@ export async function createManualOrder(
     // 2) Taxa e total
     let deliveryFeeCents = 0
     if (data.consumptionMethod === "DELIVERY") {
-      const fee = (await getDeliveryFees(restaurant.id))[data.areaType]
+      const fees = await getDeliveryFees(slug)
+      const fee = fees[data.areaType]
       if (fee === undefined) {
         return { success: false, error: "Não atendemos esta área de entrega." }
       }
@@ -202,9 +204,15 @@ export async function createManualOrder(
             customerId,
             userId: null,
             orderNumber,
-            status: "PENDING", // decisão: ou CONFIRMED, já que o atendente confirmou por telefone
+            status: "CONFIRMED",
             consumptionMethod: data.consumptionMethod,
-            paymentMethod: "NOT_DEFINED", // TODO: quando o campo entrar no schema
+            paymentMethod:
+              data.consumptionMethod === "DELIVERY" ? data.paymentMethod : null,
+            changeAmount:
+              data.consumptionMethod === "DELIVERY" &&
+              data.paymentMethod === "CASH"
+                ? (data.changeAmount ?? null)
+                : null,
             notes: data.notes ?? null,
             deliveryFee: deliveryFeeCents / 100,
             totalAmount: total,
@@ -283,7 +291,7 @@ export async function createManualOrder(
       }),
     )
 
-    // TODO: waitUntil(processOrderPrinting(...)) e notifyNewOrder, se fizer sentido no Admin
+    // TODO: waitUntil(processOrderPrinting(...)) e notifyNewOrder
     revalidatePath(`/${slug}/pedidos`)
 
     return {

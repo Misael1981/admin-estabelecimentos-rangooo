@@ -97,6 +97,7 @@ export const pickupSchema = z.object({
   customerName: z.string().min(1, "Nome é obrigatório"),
   customerPhone: z.string().min(1, "Telefone é obrigatório"),
   customerCode: z.number().int().positive().optional(),
+  suggestedCustomerCode: z.number().int().positive().optional(),
 
   pickupTime: z
     .string()

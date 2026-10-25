@@ -12,6 +12,7 @@ import { formatPhoneNumber } from "@/helpers/format-phone-number"
 import { formatTime } from "@/helpers/format-time"
 import { ManualOrderFormValue } from "@/schemas/manual-order.schemas"
 import { useFormContext } from "react-hook-form"
+import CustomerCodeBadge from "../CustomerCodeBadge"
 
 type PickupFormValue = Extract<
   ManualOrderFormValue,
@@ -23,7 +24,6 @@ const PickupFields = () => {
 
   const {
     register,
-    watch,
     setValue,
     formState: { errors },
   } = form
@@ -35,16 +35,7 @@ const PickupFields = () => {
       <CardTitle>Dados do Cliente</CardTitle>
 
       <FieldGroup className="space-y-4">
-        <div className="flex justify-end">
-          <div className="bg-muted/50 flex max-w-xs items-center justify-between rounded-lg border p-3">
-            <p className="text-muted-foreground text-sm font-medium">
-              Código do Cliente:{" "}
-              <strong className="text-primary text-base font-bold">
-                {watch("customerCode")}
-              </strong>
-            </p>
-          </div>
-        </div>
+        <CustomerCodeBadge />
 
         <div className="flex flex-col gap-4 lg:flex-row">
           <Field>

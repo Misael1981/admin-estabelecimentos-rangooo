@@ -80,7 +80,8 @@ const ManualOrderForm = ({
       // Cliente (DELIVERY e PICKUP)
       customerName: "",
       customerPhone: "",
-      customerCode: nextCustomerCode,
+      customerCode: undefined,
+      suggestedCustomerCode: nextCustomerCode,
 
       // PICKUP
       pickupTime: "",
@@ -159,7 +160,7 @@ const ManualOrderForm = ({
           router.push(`/${establishment.slug}/pedidos`)
         } else {
           toast.error("Erro ao criar pedido")
-          console.log(result.error)
+          console.log("Qual erro está dando: ", result.error)
         }
       } catch (error) {
         console.error("Erro ao registrar pedido:", error)
