@@ -52,6 +52,7 @@ export type OrderDTO = {
   customerName: string
   customerPhone: string
   paymentMethod: string | null
+  changeAmount: number | null
   orderNumber: number
   totalAmount: number
   status: OrderStatus

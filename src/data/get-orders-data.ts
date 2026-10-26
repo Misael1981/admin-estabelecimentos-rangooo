@@ -65,6 +65,7 @@ export async function getOrdersData(slug: string, method?: ConsumptionMethod) {
     status: order.status,
     method: order.consumptionMethod,
     paymentMethod: order.paymentMethod,
+    changeAmount: order.changeAmount ? Number(order.changeAmount) : null,
     createdAt: order.createdAt,
     address: parseAddress(order.deliveryAddress),
     items: order.items.map((i) => ({

@@ -1,7 +1,9 @@
 import { OrderDTO } from "@/dtos/order.dto"
 import OrderItems from "./components/OrderItems"
-import { METHOD_CONFIGS, paymentMethods } from "@/constants/maps-options"
+import { METHOD_CONFIGS } from "@/constants/maps-options"
 import { formatDateWithDate } from "@/helpers/format-date-with-date"
+import { PAYMENT_METHOD_LABELS } from "@/constants/labels"
+import { formatCurrency } from "@/helpers/format-currency"
 
 type OrderPrintTemplateProps = {
   order: OrderDTO
@@ -34,14 +36,22 @@ const OrderPrintTemplate = ({
         <div>
           {order.method === "DELIVERY" && (
             <div>
-              <span>Método de pagamento: </span>
-              <span className="text-xl">
-                {
-                  paymentMethods[
-                    order.paymentMethod as keyof typeof paymentMethods
-                  ]
-                }
-              </span>
+              <div>
+                <span>Método de pagamento: </span>
+                <span className="text-lg font-bold text-green-600">
+                  {order.paymentMethod &&
+                  PAYMENT_METHOD_LABELS[order.paymentMethod]
+                    ? PAYMENT_METHOD_LABELS[order.paymentMethod]
+                    : "Não informado"}
+                </span>
+              </div>
+
+              {order.changeAmount && (
+                <>
+                  <span>Troco para: </span>
+                  <span>{formatCurrency(order.changeAmount)}</span>
+                </>
+              )}
             </div>
           )}
         </div>

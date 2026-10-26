@@ -45,3 +45,18 @@ export const PAYMENT_METHOD_LABEL: Record<PaymentMethod, string> = {
   CREDIT_CARD: "Cartão de Crédito",
   DEBIT_CARD: "Cartão de Débito",
 }
+
+export const PAYMENT_METHOD_LABELS: Record<string, string> = {
+  // Padrão novo (Prisma / Admin)
+  CASH: "Dinheiro",
+  PIX: "Pix",
+  CREDIT_CARD: "Cartão de Crédito",
+  DEBIT_CARD: "Cartão de Débito",
+
+  // Padrão antigo (App Rangooo)
+  cash: "Dinheiro",
+  pix: "Pix",
+  card: "Cartão",
+  credit: "Cartão de Crédito",
+  debit: "Cartão de Débito",
+}

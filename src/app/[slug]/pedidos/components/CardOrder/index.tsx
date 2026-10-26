@@ -3,15 +3,12 @@
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { formatCurrency } from "@/helpers/format-currency"
-import {
-  CardOrderProps,
-  METHOD_CONFIGS,
-  paymentMethods,
-} from "@/constants/maps-options"
+import { CardOrderProps, METHOD_CONFIGS } from "@/constants/maps-options"
 import SelectStatus from "./components/SelectStatus"
 import { Button } from "@/components/ui/button"
 import { Printer } from "lucide-react"
 import { formatPhoneNumber } from "@/helpers/format-phone-number"
+import { PAYMENT_METHOD_LABELS } from "@/constants/labels"
 
 const CardOrder = ({ order, slug, onPrint }: CardOrderProps) => {
   const methodConfig = METHOD_CONFIGS[order.method!]
@@ -73,11 +70,10 @@ const CardOrder = ({ order, slug, onPrint }: CardOrderProps) => {
                 Método de pagamento
               </span>
               <span className="text-lg font-bold text-green-600">
-                {
-                  paymentMethods[
-                    order.paymentMethod as keyof typeof paymentMethods
-                  ]
-                }
+                {order.paymentMethod &&
+                PAYMENT_METHOD_LABELS[order.paymentMethod]
+                  ? PAYMENT_METHOD_LABELS[order.paymentMethod]
+                  : "Não informado"}
               </span>
             </div>
           )}
