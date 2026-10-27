@@ -104,7 +104,7 @@ A plataforma atende principalmente pequenos e médios estabelecimentos, oferecen
   - Aviso de vencimento no Admin Estabelecimento
   - Recibo de pagamento com opção de impressão
 
-- [ ] **Fase 2:** Registro de pedidos realizados por telefone
+- [x] **Fase 2:** Registro de pedidos realizados por telefone
   - Permitir que pedidos recebidos por ligação sejam registrados diretamente no Admin Estabelecimento.
 
 - [ ] **Fase 3:** Refatoração do SDK

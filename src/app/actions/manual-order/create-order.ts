@@ -19,6 +19,22 @@ import { getNextCustomerCode } from "@/data/orders/customer-code"
 import { generateOrderNumber } from "@/services/order-number.service"
 import { AreaType } from "@/constants/enums"
 import { getDeliveryFees } from "@/data/orders/delivery-fees"
+import { processOrderPrinting } from "@/services/printer.service"
+import { waitUntil } from "@vercel/functions"
+
+export type OrderForPrinting = Prisma.OrderGetPayload<{
+  include: {
+    customer: true
+    restaurant: true
+    items: {
+      include: {
+        product: {
+          include: { menuCategory: true }
+        }
+      }
+    }
+  }
+}>
 
 class OrderError extends Error {}
 
@@ -291,8 +307,14 @@ export async function createManualOrder(
       }),
     )
 
-    // TODO: waitUntil(processOrderPrinting(...)) e notifyNewOrder
     revalidatePath(`/${slug}/pedidos`)
+
+    /* ---------------- Processamento em Background ---------------- */
+    waitUntil(
+      processOrderPrinting(order).catch((err) =>
+        console.error("❌ Falha crítica no fluxo de impressão:", err),
+      ),
+    )
 
     return {
       success: true,

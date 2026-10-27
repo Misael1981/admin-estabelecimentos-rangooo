@@ -1,39 +1,16 @@
 "use client"
 
-import { OrderDTO, OrderItemDTO } from "@/dtos/order.dto"
+import { OrderDTO } from "@/dtos/order.dto"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { CheckCircle2, ChevronDown, ChevronUp } from "lucide-react"
 import { useRouter } from "next/navigation"
-import type { AreaType, OrderStatus } from "@misael1981/rangooo-database"
 import CardOrder from "../CardOrder"
 import OrderPrintTemplate from "../OrderPrintTemplate"
 import { useReactToPrint } from "react-to-print"
 import { usePusherChannel } from "@/hooks/usePusherChannel"
 
-type OrderType = {
-  id: string
-  customerName: string
-  customerPhone: string
-  paymentMethod: string | null
-  orderNumber: number
-  totalAmount: number
-  status: OrderStatus
-  method: "DELIVERY" | "PICKUP" | "DINE_IN"
-  createdAt: Date
-  items: OrderItemDTO[]
-  address?:
-    | {
-        street: string
-        number: string
-        city: string
-        neighborhood?: string
-        complement?: string
-        reference?: string
-        areaType?: AreaType
-      }
-    | undefined
-}
+type OrderType = OrderDTO
 
 type OrdersListWrapperProps = {
   normalizedOrders: OrderType[]
