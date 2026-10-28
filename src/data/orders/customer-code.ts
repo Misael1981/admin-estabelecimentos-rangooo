@@ -1,6 +1,6 @@
-import type { Prisma } from "@misael1981/rangooo-database"
 import "server-only"
-// import type { Prisma } from "@prisma/client"
+
+import type { Prisma } from "@misael1981/rangooo-database"
 
 const MIN_CUSTOMER_CODE = 2100
 

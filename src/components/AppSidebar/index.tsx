@@ -19,6 +19,7 @@ import {
   ClipboardList,
   Clock3,
   LayoutDashboard,
+  Monitor,
   Motorbike,
   Settings,
   ShoppingBasket,
@@ -41,6 +42,11 @@ const AppSidebar = () => {
       name: "Gerenciar Pedidos",
       url: `/${slug}/pedidos`,
       icon: ClipboardList,
+    },
+    {
+      name: "Sistema KDS",
+      url: `/${slug}/kds`,
+      icon: Monitor,
     },
     {
       name: "Perfil do Estabelecimento",
