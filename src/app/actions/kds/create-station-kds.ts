@@ -1,4 +1,3 @@
-// app/actions/create-station-kds.ts
 "use server"
 
 import { revalidatePath } from "next/cache"
@@ -13,7 +12,7 @@ export async function createStationKds(
   slug: string,
   input: StationKdsFormInput,
 ): Promise<ActionResult> {
-  // Valida de novo no servidor: nunca confie só na validação do client
+  // Nova validação no servidor, NUNCA ESQUECER DESSE DETALHE, VALIDAR NO SERVIDOR
   const parsed = stationKdsSchema.safeParse(input)
   if (!parsed.success) {
     return { success: false, error: "Dados inválidos." }
@@ -26,9 +25,6 @@ export async function createStationKds(
   if (!restaurant) {
     return { success: false, error: "Estabelecimento não encontrado." }
   }
-
-  // TODO: aqui confirme que o usuário logado no painel admin
-  // realmente é dono/gerente desse restaurante.
 
   try {
     await db.kdsStation.create({
@@ -45,6 +41,6 @@ export async function createStationKds(
     return { success: false, error: "Erro ao criar etapa." }
   }
 
-  revalidatePath(`/${slug}/kds`) // ajuste pra rota real do seu painel
+  revalidatePath(`/${slug}/kds`)
   return { success: true }
 }

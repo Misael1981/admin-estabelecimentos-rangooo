@@ -10,7 +10,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog"
 import {
   Field,
@@ -28,17 +27,28 @@ import {
   stationKdsSchema,
 } from "@/schemas/kds.schemas"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { CirclePlus } from "lucide-react"
-import { useState, useTransition } from "react"
+import { useTransition } from "react"
 import { Controller, useForm } from "react-hook-form"
 import { toast } from "sonner"
 
 interface DialogStationFormProps {
   slug: string
+  station?: {
+    id: string
+    name: string
+    order: number
+    active: boolean
+  }
+  open: boolean
+  onOpenChange: (nextOpen: boolean) => void
 }
 
-const DialogStationForm = ({ slug }: DialogStationFormProps) => {
-  const [open, setOpen] = useState(false)
+const DialogStationForm = ({
+  slug,
+  station,
+  open,
+  onOpenChange,
+}: DialogStationFormProps) => {
   const [isPending, startTransition] = useTransition()
 
   const {
@@ -50,9 +60,9 @@ const DialogStationForm = ({ slug }: DialogStationFormProps) => {
   } = useForm<StationKdsFormInput, unknown, StationKdsFormValues>({
     resolver: zodResolver(stationKdsSchema),
     defaultValues: {
-      name: "",
-      order: undefined,
-      active: true,
+      name: station?.name ?? "",
+      order: station?.order ?? undefined,
+      active: station?.active ?? true,
     },
   })
 
@@ -67,7 +77,7 @@ const DialogStationForm = ({ slug }: DialogStationFormProps) => {
 
       toast.success("Etapa criada com sucesso!")
       reset()
-      setOpen(false)
+      onOpenChange(false)
     })
   }
 
@@ -78,18 +88,11 @@ const DialogStationForm = ({ slug }: DialogStationFormProps) => {
   return (
     <Dialog
       open={open}
-      onOpenChange={(value) => {
-        setOpen(value)
-        if (!value) reset() // limpa o form ao fechar
+      onOpenChange={(nextOpen) => {
+        onOpenChange(nextOpen)
+        if (!nextOpen) reset()
       }}
     >
-      <DialogTrigger asChild>
-        <Button type="button">
-          <CirclePlus className="size-4" />
-          Adicionar etapa
-        </Button>
-      </DialogTrigger>
-
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4">
           <DialogHeader>
