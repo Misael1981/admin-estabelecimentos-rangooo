@@ -1,6 +1,7 @@
 "use client"
 
 import { createStationKds } from "@/app/actions/kds/create-station-kds"
+import { updateStationKds } from "@/app/actions/kds/update-station-kds"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -68,18 +69,26 @@ const DialogStationForm = ({
 
   const onSubmit = (data: StationKdsFormValues) => {
     startTransition(async () => {
-      const result = await createStationKds(slug, data)
+      const result = station?.id
+        ? await updateStationKds(station.id, slug, data)
+        : await createStationKds(slug, data)
 
       if (!result.success) {
         toast.error(result.error)
         return
       }
 
-      toast.success("Etapa criada com sucesso!")
+      toast.success(
+        station?.id
+          ? "Etapa atualizada com sucesso!"
+          : "Etapa criada com sucesso!",
+      )
       reset()
       onOpenChange(false)
     })
   }
+
+  const labelButton = station?.id ? "Editar Etapa" : "Criar Etapa"
 
   const onError = (errors: unknown) => {
     console.log("❌ O ZOD BLOQUEOU O ENVIO NESSES CAMPOS:", errors)
@@ -96,7 +105,9 @@ const DialogStationForm = ({
       <DialogContent>
         <form onSubmit={handleSubmit(onSubmit, onError)} className="space-y-4">
           <DialogHeader>
-            <DialogTitle>Nova Etapa de Preparo</DialogTitle>
+            <DialogTitle>
+              {station?.id ? "Editar" : "Criar"} Etapa de Preparo
+            </DialogTitle>
             <DialogDescription>
               Informe o nome da etapa para a linha de produção da cozinha.
             </DialogDescription>
@@ -156,7 +167,7 @@ const DialogStationForm = ({
               </Button>
             </DialogClose>
             <Button type="submit" disabled={isPending}>
-              {isPending ? "Salvando..." : "Criar Etapa"}
+              {isPending ? "Salvando..." : labelButton}
             </Button>
           </DialogFooter>
         </form>

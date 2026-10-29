@@ -12,6 +12,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Check, Edit, GripVertical, Trash2 } from "lucide-react"
 import DialogStationForm from "../DialogStationForm" // O nosso dialog unificado
+import DialogAlertDelete from "@/components/DialogAlertDelete"
+import { deleteStationKds } from "@/app/actions/kds/delete-station-kds"
 
 type StationCardProps = {
   station: {
@@ -24,8 +26,16 @@ type StationCardProps = {
 }
 
 const StationCard = ({ station, slug }: StationCardProps) => {
-  // Controla se o modal de edição está aberto ou fechado
   const [isEditOpen, setIsEditOpen] = useState(false)
+  const [isDialogDeleteOpen, setIsDialogDeleteOpen] = useState(false)
+
+  const handleOpenDialogDelete = () => {
+    setIsDialogDeleteOpen(true)
+  }
+
+  const handleSubmitDelete = async () => {
+    await deleteStationKds(station.id, slug)
+  }
 
   return (
     <>
@@ -66,10 +76,7 @@ const StationCard = ({ station, slug }: StationCardProps) => {
 
             <DropdownMenuItem
               className="text-red-600 focus:text-red-600"
-              onClick={() => {
-                // Aqui depois chamamos a função de excluir ou abrimos um alert/dialog de delete
-                console.log("Excluir station:", station.id)
-              }}
+              onClick={handleOpenDialogDelete}
             >
               <Trash2 className="mr-2 h-4 w-4" />
               Excluir
@@ -78,12 +85,19 @@ const StationCard = ({ station, slug }: StationCardProps) => {
         </DropdownMenu>
       </div>
 
-      {/* Renderizamos o Dialog controlado externamente passando a station para edição */}
       <DialogStationForm
         slug={slug}
         station={station}
         open={isEditOpen}
         onOpenChange={setIsEditOpen}
+      />
+
+      <DialogAlertDelete
+        isOpen={isDialogDeleteOpen}
+        onOpenChange={setIsDialogDeleteOpen}
+        title="Etapa"
+        onDelete={handleSubmitDelete}
+        description="Ao deletar esta etapa, todo o processo produtivo será afetado."
       />
     </>
   )
