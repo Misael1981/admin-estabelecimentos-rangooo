@@ -26,7 +26,7 @@ export default async function KdsPage({ params }: KdsPageProps) {
         icon={Monitor}
       />
 
-      <CardStation stations={kdsData?.stations} />
+      <CardStation stations={kdsData?.stations} slug={slug} />
     </div>
   )
 }

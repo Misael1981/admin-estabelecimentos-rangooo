@@ -1,5 +1,4 @@
 import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
 import {
   Card,
   CardContent,
@@ -9,13 +8,8 @@ import {
   CardTitle,
 } from "@/components/ui/card"
 
-import {
-  Check,
-  CircleDashed,
-  CirclePlus,
-  GripVertical,
-  ListOrdered,
-} from "lucide-react"
+import { Check, CircleDashed, GripVertical, ListOrdered } from "lucide-react"
+import DialogStationForm from "../DialogStationForm"
 
 type CardStationProps = {
   stations: {
@@ -24,9 +18,10 @@ type CardStationProps = {
     order: number
     active: boolean
   }[]
+  slug: string
 }
 
-const CardStation = ({ stations }: CardStationProps) => {
+const CardStation = ({ stations, slug }: CardStationProps) => {
   const orderedStations = [...stations].sort((a, b) => a.order - b.order)
 
   return (
@@ -96,11 +91,7 @@ const CardStation = ({ stations }: CardStationProps) => {
       </CardContent>
 
       <CardFooter className="justify-end border-t pt-4">
-        {/* Abrir Dialog de cadastro de etapa */}
-        <Button>
-          <CirclePlus className="size-4" />
-          Adicionar etapa
-        </Button>
+        <DialogStationForm slug={slug} />
       </CardFooter>
     </Card>
   )
