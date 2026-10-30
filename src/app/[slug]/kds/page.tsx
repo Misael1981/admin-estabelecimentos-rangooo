@@ -2,6 +2,7 @@ import GenericHeader from "@/components/GenericHeader"
 import { Monitor } from "lucide-react"
 import { getDataKds } from "@/data/kds/get-data-kds.querie"
 import CardStations from "./components/CardStations"
+import ListKdsUsers from "./components/ListKdsUsers"
 
 interface KdsPageProps {
   params: Promise<{
@@ -27,6 +28,8 @@ export default async function KdsPage({ params }: KdsPageProps) {
       />
 
       <CardStations stations={kdsData?.stations} slug={slug} />
+
+      <ListKdsUsers slug={slug} users={kdsData.users} />
     </div>
   )
 }

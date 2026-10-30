@@ -1,6 +1,7 @@
 import {
   AreaType,
   ConsumptionMethod,
+  KdsRole,
   PaymentMethod,
   PaymentReceiptStatus,
   PlanType,
@@ -59,4 +60,10 @@ export const PAYMENT_METHOD_LABELS: Record<string, string> = {
   card: "Cartão",
   credit: "Cartão de Crédito",
   debit: "Cartão de Débito",
+}
+
+export const KDS_ROLE_LABELS: Record<KdsRole, string> = {
+  OPERATOR: "Operador(a)",
+  CHEF: "Chefe de Cozinha",
+  MANAGER: "Gerente",
 }

@@ -51,3 +51,11 @@ export const PaymentMethod = {
 } as const
 
 export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+export const KdsRole = {
+  OPERATOR: "OPERATOR",
+  CHEF: "CHEF",
+  MANAGER: "MANAGER",
+} as const
+
+export type KdsRole = (typeof KdsRole)[keyof typeof KdsRole]

@@ -1,4 +1,3 @@
-// app/actions/kds/update-station-kds.ts
 "use server"
 
 import { revalidatePath } from "next/cache"

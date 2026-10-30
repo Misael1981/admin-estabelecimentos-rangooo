@@ -1,6 +1,7 @@
 import {
   AreaType,
   ConsumptionMethod,
+  KdsRole,
   PaymentMethod,
   PaymentReceiptStatus,
   PlanType,
@@ -9,6 +10,7 @@ import {
 import {
   AREA_TYPE_LABEL,
   CONSUMPTION_METHOD_LABEL,
+  KDS_ROLE_LABELS,
   PAYMENT_METHOD_LABEL,
   PAYMENT_RECEIPT_LABELS,
   SUBSCRIPTION_STATUS_LABELS,
@@ -118,5 +120,20 @@ export const PAYMENT_METHOD_OPTIONS = [
   {
     value: PaymentMethod.DEBIT_CARD,
     label: PAYMENT_METHOD_LABEL[PaymentMethod.DEBIT_CARD],
+  },
+]
+
+export const KDS_ROLE_OPTIONS = [
+  {
+    value: KdsRole.OPERATOR,
+    label: KDS_ROLE_LABELS[KdsRole.OPERATOR],
+  },
+  {
+    value: KdsRole.CHEF,
+    label: KDS_ROLE_LABELS[KdsRole.CHEF],
+  },
+  {
+    value: KdsRole.MANAGER,
+    label: KDS_ROLE_LABELS[KdsRole.MANAGER],
   },
 ]

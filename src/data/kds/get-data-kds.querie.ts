@@ -19,7 +19,7 @@ export async function getDataKds(slug: string) {
         username: true,
         role: true,
         active: true,
-        createdAt: true,
+        pinHash: true,
       },
       orderBy: { name: "asc" },
     }),
