@@ -25,7 +25,13 @@ export async function getDataKds(slug: string) {
     }),
     db.kdsStation.findMany({
       where: { restaurantId: restaurant.id },
-      select: { id: true, name: true, order: true, active: true },
+      select: {
+        id: true,
+        name: true,
+        order: true,
+        active: true,
+        estimatedMinutes: true,
+      },
       orderBy: { order: "asc" },
     }),
   ])

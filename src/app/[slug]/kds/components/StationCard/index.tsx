@@ -21,6 +21,7 @@ type StationCardProps = {
     id: string
     order: number
     active: boolean
+    estimatedMinutes: number
   }
   slug: string
 }
@@ -39,50 +40,57 @@ const StationCard = ({ station, slug }: StationCardProps) => {
 
   return (
     <>
-      <div className="hover:bg-muted/40 flex items-center gap-3 rounded-xl border p-3 transition-colors">
-        <div className="bg-muted flex size-10 shrink-0 items-center justify-center rounded-lg text-sm font-semibold tabular-nums">
-          {String(station.order).padStart(2, "0")}
+      <div className="hover:bg-muted/40 flex items-center justify-between gap-3 rounded-xl border p-3 transition-colors">
+        <div className="flex gap-2">
+          <div className="bg-muted flex size-10 shrink-0 items-center justify-center rounded-lg text-sm font-semibold tabular-nums">
+            {String(station.order).padStart(2, "0")}
+          </div>
+          <div className="min-w-0 flex-1 space-y-1">
+            <p className="truncate font-medium">{station.name}</p>
+            <p className="text-muted-foreground text-xs">
+              Etapa {station.order} da sequência
+            </p>
+          </div>
         </div>
 
-        <div className="min-w-0 flex-1 space-y-1">
-          <p className="truncate font-medium">{station.name}</p>
+        <div className="min-w-0 space-y-1 text-center">
+          <p className="truncate font-medium">Tempo estimado</p>
           <p className="text-muted-foreground text-xs">
-            Etapa {station.order} da sequência
+            {station.estimatedMinutes} minutos
           </p>
         </div>
 
-        <Badge
-          variant={station.active ? "secondary" : "outline"}
-          className="shrink-0 gap-1"
-        >
-          {station.active ? <Check className="size-3" /> : null}
-          {station.active ? "Ativa" : "Inativa"}
-        </Badge>
-
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon" className="h-8 w-8">
-              <GripVertical className="text-muted-foreground/50 size-5 shrink-0" />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            {/* Ao clicar, apenas abrimos o estado do modal, evitando o conflito do Radix */}
-            <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
-              <Edit className="mr-2 h-4 w-4" />
-              Editar
-            </DropdownMenuItem>
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem
-              className="text-red-600 focus:text-red-600"
-              onClick={handleOpenDialogDelete}
-            >
-              <Trash2 className="mr-2 h-4 w-4" />
-              Excluir
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <div className="flex items-center gap-2">
+          <Badge
+            variant={station.active ? "secondary" : "outline"}
+            className="shrink-0 gap-1"
+          >
+            {station.active ? <Check className="size-3" /> : null}
+            {station.active ? "Ativa" : "Inativa"}
+          </Badge>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="h-8 w-8">
+                <GripVertical className="text-muted-foreground/50 size-5 shrink-0" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              {/* Ao clicar, apenas abrimos o estado do modal, evitando o conflito do Radix */}
+              <DropdownMenuItem onClick={() => setIsEditOpen(true)}>
+                <Edit className="mr-2 h-4 w-4" />
+                Editar
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="text-red-600 focus:text-red-600"
+                onClick={handleOpenDialogDelete}
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Excluir
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
 
       <DialogStationForm

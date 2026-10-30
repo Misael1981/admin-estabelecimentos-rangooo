@@ -8,6 +8,7 @@ export const stationKdsSchema = z.object({
     .min(1, "Nome é obrigatório")
     .max(40, "Máximo de 40 caracteres"),
   order: z.number().int().min(0, "Ordem inválida"),
+  estimatedMinutes: z.number().int().default(5),
   active: z.boolean().default(true),
 })
 

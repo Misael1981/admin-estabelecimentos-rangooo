@@ -39,6 +39,7 @@ interface DialogStationFormProps {
     name: string
     order: number
     active: boolean
+    estimatedMinutes: number
   }
   open: boolean
   onOpenChange: (nextOpen: boolean) => void
@@ -64,6 +65,7 @@ const DialogStationForm = ({
       name: station?.name ?? "",
       order: station?.order ?? undefined,
       active: station?.active ?? true,
+      estimatedMinutes: station?.estimatedMinutes ?? 5,
     },
   })
 
@@ -142,6 +144,23 @@ const DialogStationForm = ({
                 placeholder="Ex: Forno, Montagem, Embalagem..."
               />
               <FieldError>{errors.name?.message}</FieldError>
+            </Field>
+
+            <Field>
+              <FieldLabel htmlFor="estimatedMinutes">
+                Tempo Estimado (Minutos)
+              </FieldLabel>
+              <FieldDescription>
+                Tempo médio esperado para concluir esta etapa de preparo.
+              </FieldDescription>
+              <Input
+                id="estimatedMinutes"
+                type="number"
+                min={1}
+                {...register("estimatedMinutes", { valueAsNumber: true })}
+                placeholder="Ex: 5"
+              />
+              <FieldError>{errors.estimatedMinutes?.message}</FieldError>
             </Field>
 
             <Field>

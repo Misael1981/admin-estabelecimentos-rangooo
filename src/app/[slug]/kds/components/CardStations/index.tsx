@@ -21,6 +21,7 @@ type CardStationsProps = {
     id: string
     order: number
     active: boolean
+    estimatedMinutes: number
   }[]
   slug: string
 }
