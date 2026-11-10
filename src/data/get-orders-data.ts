@@ -58,6 +58,7 @@ export async function getOrdersData(slug: string, method?: ConsumptionMethod) {
   // NORMALIZAÇÃO DIRETO NO SERVER
   const normalizedOrders = orders.map((order) => ({
     id: order.id,
+    isManual: order.isManual,
     customerName: order.user?.name ?? order.customer?.name ?? "Cliente",
     customerPhone: order.user?.phone ?? order.customer?.phone ?? "",
     totalAmount: Number(order.totalAmount),

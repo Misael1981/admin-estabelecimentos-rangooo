@@ -221,6 +221,7 @@ export async function createManualOrder(
             userId: null,
             orderNumber,
             status: "CONFIRMED",
+            isManual: true,
             consumptionMethod: data.consumptionMethod,
             paymentMethod:
               data.consumptionMethod === "DELIVERY" ? data.paymentMethod : null,

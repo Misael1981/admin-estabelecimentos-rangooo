@@ -49,6 +49,7 @@ export type OrderItemPrintDTO = {
 
 export type OrderDTO = {
   id: string
+  isManual: boolean
   customerName: string
   customerPhone: string
   paymentMethod: string | null
