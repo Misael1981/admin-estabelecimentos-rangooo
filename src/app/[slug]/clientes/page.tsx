@@ -31,7 +31,7 @@ export default async function ClientsPage({
   return (
     <div className="space-y-8">
       <GenericHeader
-        title="Gerencie seus clientes"
+        title="Gerencie seus clientes do App"
         description="Gerencie seus clientes, fique por dentro do que seus clientes andam pedindo..."
         icon={UserStar}
       />

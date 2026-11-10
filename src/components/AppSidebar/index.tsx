@@ -69,7 +69,7 @@ const AppSidebar = () => {
       icon: Users,
     },
     {
-      name: "Gerenciar Clientes",
+      name: "Gerenciar Clientes do App",
       url: `/${slug}/clientes`,
       icon: UserStar,
     },
