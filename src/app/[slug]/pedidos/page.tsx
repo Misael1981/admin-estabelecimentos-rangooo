@@ -49,7 +49,11 @@ export default async function OrdersPage({
 
   return (
     <div className="space-y-8">
-      <HeaderOrdersPage totalOrders={orders.length} slug={slug} />
+      <HeaderOrdersPage
+        totalOrders={orders.length}
+        slug={slug}
+        title="Gerenciar Pedidos"
+      />
 
       <FilterConsumptionMethods
         consumptionMethods={restaurant.consumptionMethods}

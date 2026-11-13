@@ -7,9 +7,14 @@ import MenuPages from "./components/MenuPages"
 interface HeaderOrdersPageProps {
   totalOrders?: number
   slug: string
+  title: string
 }
 
-const HeaderOrdersPage = ({ totalOrders, slug }: HeaderOrdersPageProps) => {
+const HeaderOrdersPage = ({
+  totalOrders,
+  slug,
+  title,
+}: HeaderOrdersPageProps) => {
   const today = format(new Date(), "EEEE, dd 'de' MMMM", { locale: ptBR })
 
   return (
@@ -21,7 +26,7 @@ const HeaderOrdersPage = ({ totalOrders, slug }: HeaderOrdersPageProps) => {
           </div>
           <div>
             <h1 className="text-2xl font-bold tracking-tight sm:text-3xl">
-              Gerenciar Pedidos
+              {title}
             </h1>
             <div className="flex items-center gap-2 text-sm text-slate-500">
               <Calendar className="h-3.5 w-3.5" />

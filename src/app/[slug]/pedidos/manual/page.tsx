@@ -24,7 +24,7 @@ export default async function ManualOrderPage({ params }: ManualOrderProps) {
 
   return (
     <div className="space-y-8">
-      <HeaderOrdersPage slug={slug} />
+      <HeaderOrdersPage slug={slug} title="Pedidos balcão ou Telefone" />
 
       <ManualOrderForm
         establishment={establishment}

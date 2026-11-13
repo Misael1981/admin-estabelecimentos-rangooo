@@ -22,6 +22,11 @@ const MenuPages = ({ slug }: MenuPagesProps) => {
       url: `/${slug}/pedidos/manual`,
       label: "Pedido Manual",
     },
+    {
+      id: 3,
+      url: `/${slug}/pedidos/clientes`,
+      label: "Clientes do Estabelecimento",
+    },
   ]
 
   return (
